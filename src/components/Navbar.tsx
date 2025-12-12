@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
   const showSearch = displaySearchOn.includes(location.pathname);
 const handleLogout = () => {
   logout();
-  window.location.href = "https://rotemaharon.github.io/BCard/#/login";
+navigate("/login");
 };
 
   return (
