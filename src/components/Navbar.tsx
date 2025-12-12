@@ -9,24 +9,20 @@ import {
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { useSearch } from "../context/SearchContext";
-
 interface NavbarProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
 }
-
 const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
   const { user, logout } = useAuth();
   const { searchQuery, setSearchQuery } = useSearch();
   const navigate = useNavigate();
   const location = useLocation();
-
   const displaySearchOn = ["/", "/my-cards", "/fav-cards"];
   const showSearch = displaySearchOn.includes(location.pathname);
-
   const handleLogout = () => {
     logout();
-    window.location.href = "/BCard/#/login";
+    navigate("/login");
   };
 
   return (
@@ -50,7 +46,6 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
         >
           BCard
         </h2>
-
         <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
           <NavLink
             to="/about"
@@ -84,7 +79,6 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
           )}
         </div>
       </div>
-
       <div
         style={{
           display: "flex",
@@ -121,7 +115,6 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
             <FaSearch color={darkMode ? "white" : "gray"} />
           </div>
         )}
-
         <button
           onClick={toggleDarkMode}
           style={{
@@ -133,7 +126,6 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
         >
           {darkMode ? <FaSun /> : <FaMoon />}
         </button>
-
         {user ? (
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <div
@@ -191,5 +183,4 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
     </nav>
   );
 };
-
 export default Navbar;
