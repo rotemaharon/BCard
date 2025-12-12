@@ -20,10 +20,10 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
   const location = useLocation();
   const displaySearchOn = ["/", "/my-cards", "/fav-cards"];
   const showSearch = displaySearchOn.includes(location.pathname);
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+const handleLogout = () => {
+  logout();
+  window.location.href = "https://rotemaharon.github.io/BCard/#/login";
+};
 
   return (
     <nav
