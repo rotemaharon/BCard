@@ -49,12 +49,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setToken(newToken);
     setUser(jwtDecode(newToken) as unknown as UserType);
   };
-
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
     setUser(null);
-    window.location.href = "/login";
   };
 
   const value = useMemo(
