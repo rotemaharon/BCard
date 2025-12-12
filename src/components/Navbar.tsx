@@ -25,8 +25,8 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
   const showSearch = displaySearchOn.includes(location.pathname);
 
   const handleLogout = () => {
-    logout(); 
-    navigate("/");
+    logout();
+    window.location.href = "/BCard/#/login";
   };
 
   return (
