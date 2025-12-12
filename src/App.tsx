@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { SearchProvider } from "./context/SearchContext";
 import Layout from "./components/Layout";
@@ -16,7 +16,7 @@ import AboutPage from "./pages/AboutPage";
 import SandboxPage from "./pages/SandboxPage";
 import CardDetailsPage from "./pages/CardDetailsPage";
 import ErrorPage from "./pages/ErrorPage";
-import EditProfilePage from "./pages/EditProfilePage"; 
+import EditProfilePage from "./pages/EditProfilePage";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isLoading } = useAuth();
@@ -29,6 +29,13 @@ const BusinessRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isBusiness, isLoading } = useAuth();
   if (isLoading) return <div className="text-center mt-5">Loading...</div>;
   if (!user || !isBusiness) return <Navigate to="/" replace />;
+  return <>{children}</>;
+};
+
+const AdminRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, isAdmin, isLoading } = useAuth();
+  if (isLoading) return <div className="text-center mt-5">Loading...</div>;
+  if (!user || !isAdmin) return <Navigate to="/" replace />;
   return <>{children}</>;
 };
 
@@ -92,8 +99,15 @@ const AppContent = () => {
             </BusinessRoute>
           }
         />
+        <Route
+          path="/sandbox"
+          element={
+            <AdminRoute>
+              <SandboxPage />
+            </AdminRoute>
+          }
+        />
 
-        <Route path="/sandbox" element={<SandboxPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Layout>
@@ -102,13 +116,13 @@ const AppContent = () => {
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AuthProvider>
         <SearchProvider>
           <AppContent />
         </SearchProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
