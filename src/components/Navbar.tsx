@@ -24,6 +24,11 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
   const displaySearchOn = ["/", "/my-cards", "/fav-cards"];
   const showSearch = displaySearchOn.includes(location.pathname);
 
+  const handleLogout = () => {
+    logout(); 
+    navigate("/");
+  };
+
   return (
     <nav
       style={{
@@ -152,7 +157,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
               )}
             </div>
             <button
-              onClick={logout}
+              onClick={handleLogout}
               style={{ background: "none", border: "none", color: "white" }}
             >
               <FaSignOutAlt />
