@@ -49,6 +49,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setToken(newToken);
     setUser(jwtDecode(newToken) as unknown as UserType);
   };
+
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
