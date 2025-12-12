@@ -20,10 +20,10 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
   const location = useLocation();
   const displaySearchOn = ["/", "/my-cards", "/fav-cards"];
   const showSearch = displaySearchOn.includes(location.pathname);
-const handleLogout = () => {
-  logout();
-navigate("/login");
-};
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <nav
