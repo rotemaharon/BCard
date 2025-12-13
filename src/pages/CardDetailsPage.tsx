@@ -85,6 +85,7 @@ const CardDetailsPage: React.FC = () => {
             lineHeight: "1.6",
             margin: "20px 0",
             textAlign: "left",
+            color: "black",
           }}
         >
           {card.description}
@@ -96,6 +97,7 @@ const CardDetailsPage: React.FC = () => {
             padding: "20px",
             borderRadius: "8px",
             textAlign: "left",
+            color: "black",
           }}
         >
           <h4 style={{ marginBottom: "15px" }}>Contact Details:</h4>
