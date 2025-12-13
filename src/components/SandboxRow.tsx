@@ -98,13 +98,10 @@ const SandboxRow: React.FC<SandboxRowProps> = ({
                 background: "linear-gradient(135deg, #ffecb3 0%, #ffe082 100%)",
                 color: "#8d6e63",
                 border: "none",
-                borderRadius: "50px", 
+                borderRadius: "50px",
                 fontSize: "0.8rem",
                 fontWeight: "600",
                 boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
                 transition: "transform 0.1s",
               }}
               title="Change Status"
@@ -119,13 +116,10 @@ const SandboxRow: React.FC<SandboxRowProps> = ({
                 background: "linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%)",
                 color: "#b71c1c",
                 border: "none",
-                borderRadius: "50px", 
+                borderRadius: "50px",
                 fontSize: "0.8rem",
                 fontWeight: "600",
                 boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
                 transition: "transform 0.1s",
               }}
               title="Delete User"
