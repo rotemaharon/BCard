@@ -163,7 +163,9 @@ const EditCardPage: React.FC = () => {
         boxShadow: "0 0 10px rgba(0,0,0,0.1)",
       }}
     >
-      <h2 className="text-center mb-4">Edit Card</h2>
+      <h2 className="text-center mb-4" style={{ color: "#2196F3" }}>
+        Edit Card
+      </h2>{" "}
       <form
         onSubmit={formik.handleSubmit}
         style={{
