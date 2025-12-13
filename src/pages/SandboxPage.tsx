@@ -8,12 +8,10 @@ import type { UserType } from "../interfaces/UserType";
 import { useAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
 const SandboxPage: React.FC = () => {
   const { user } = useAuth();
   const [users, setUsers] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     if (user?.isAdmin) {
       getUsers()
@@ -22,10 +20,8 @@ const SandboxPage: React.FC = () => {
         .finally(() => setLoading(false));
     }
   }, [user]);
-
   if (!user || !user.isAdmin) return <Navigate to="/" replace />;
   if (loading) return <div className="text-center mt-5">Loading...</div>;
-
   const handleDelete = async (id: string) => {
     if (!window.confirm("Delete user?")) return;
     try {
@@ -36,7 +32,6 @@ const SandboxPage: React.FC = () => {
       toast.error("Delete failed");
     }
   };
-
   const handleStatus = async (id: string) => {
     try {
       await changeUserBusinessStatus(id);
@@ -50,7 +45,6 @@ const SandboxPage: React.FC = () => {
       toast.error("Status change failed");
     }
   };
-
   const thStyle: React.CSSProperties = {
     padding: "12px 10px",
     position: "sticky",
@@ -61,12 +55,10 @@ const SandboxPage: React.FC = () => {
     textAlign: "left",
     whiteSpace: "nowrap",
   };
-
   return (
     <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
       <h1 className="mb-2">CRM System</h1>
       <p className="text-muted mb-4">Total Users: {users.length}</p>
-
       <div
         style={{
           width: "100%",
@@ -92,7 +84,6 @@ const SandboxPage: React.FC = () => {
             <col style={{ width: "10%" }} />
             <col style={{ width: "140px" }} />
           </colgroup>
-
           <thead>
             <tr style={{ backgroundColor: "#212529" }}>
               <th style={thStyle}>Image</th>
@@ -103,7 +94,6 @@ const SandboxPage: React.FC = () => {
               <th style={thStyle}>Actions</th>
             </tr>
           </thead>
-
           <tbody>
             {users.map((u, i) => (
               <tr
@@ -129,7 +119,6 @@ const SandboxPage: React.FC = () => {
                     }}
                   />
                 </td>
-
                 <td
                   style={{
                     padding: "8px 10px",
@@ -140,7 +129,6 @@ const SandboxPage: React.FC = () => {
                 >
                   {u.name.first} {u.name.last}
                 </td>
-
                 <td
                   style={{
                     padding: "8px 10px",
@@ -154,7 +142,6 @@ const SandboxPage: React.FC = () => {
                 >
                   {u.email}
                 </td>
-
                 <td style={{ padding: "8px 10px", whiteSpace: "nowrap" }}>
                   {u.isAdmin ? (
                     <span style={{ fontWeight: "bold", color: "#6f42c1" }}>
@@ -164,7 +151,6 @@ const SandboxPage: React.FC = () => {
                     "User"
                   )}
                 </td>
-
                 <td style={{ padding: "8px 10px", whiteSpace: "nowrap" }}>
                   <span
                     style={{
@@ -182,7 +168,6 @@ const SandboxPage: React.FC = () => {
                     {u.isBusiness ? "Business" : "Regular"}
                   </span>
                 </td>
-
                 <td style={{ padding: "8px 10px", whiteSpace: "nowrap" }}>
                   {!u.isAdmin && (
                     <div style={{ display: "flex", gap: "8px" }}>

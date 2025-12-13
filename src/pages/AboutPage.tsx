@@ -43,6 +43,9 @@ const AboutPage: React.FC = () => {
           location.
         </p>
       </div>
+      <p style={{ marginTop: "150px" }}>
+        Developed by <strong>Rotem Aharon</strong>
+      </p>
     </div>
   );
 };
