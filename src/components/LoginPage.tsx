@@ -40,7 +40,11 @@ const LoginPage: React.FC = () => {
         backgroundColor: "white",
       }}
     >
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Login</h2>
+      <h2
+        style={{ textAlign: "center", marginBottom: "20px", color: "#2196F3" }}
+      >
+        Login
+      </h2>
       <form
         onSubmit={formik.handleSubmit}
         style={{ display: "flex", flexDirection: "column", gap: "15px" }}

@@ -72,7 +72,7 @@ const CreateCardPage: React.FC = () => {
         borderRadius: "10px",
       }}
     >
-      <h2 style={{ textAlign: "center" }}>Create New Card</h2>
+      <h2 style={{ textAlign: "center", color: "#2196F3" }}>Create New Card</h2>
       <form
         onSubmit={formik.handleSubmit}
         style={{

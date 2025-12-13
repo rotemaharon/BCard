@@ -141,7 +141,9 @@ const EditProfilePage: React.FC = () => {
         backgroundColor: "white",
       }}
     >
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+      <h2
+        style={{ textAlign: "center", marginBottom: "20px", color: "#2196F3" }}
+      >
         Edit Profile
       </h2>
       <form

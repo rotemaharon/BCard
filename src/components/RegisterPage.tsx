@@ -118,7 +118,11 @@ const RegisterPage: React.FC = () => {
         borderRadius: "10px",
       }}
     >
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Register</h2>
+      <h2
+        style={{ textAlign: "center", marginBottom: "20px", color: "#2196F3" }}
+      >
+        Register
+      </h2>
       <form
         onSubmit={formik.handleSubmit}
         style={{
