@@ -51,6 +51,17 @@ const SandboxPage: React.FC = () => {
     }
   };
 
+  const thStyle: React.CSSProperties = {
+    padding: "12px 10px",
+    position: "sticky",
+    top: 0,
+    background: "#212529",
+    color: "white",
+    zIndex: 2,
+    textAlign: "left",
+    whiteSpace: "nowrap",
+  };
+
   return (
     <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
       <h1 className="mb-2">CRM System</h1>
@@ -58,48 +69,41 @@ const SandboxPage: React.FC = () => {
 
       <div
         style={{
+          width: "100%",
           overflowX: "auto",
-          maxHeight: "80vh",
           backgroundColor: "white",
           borderRadius: "8px",
           boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          border: "1px solid #ddd",
         }}
       >
         <table
           style={{
             width: "100%",
-            borderCollapse: "separate",
-            borderSpacing: "0",
-            fontSize: "0.9rem",
             minWidth: "800px",
+            borderCollapse: "collapse",
           }}
         >
+          <colgroup>
+            <col style={{ width: "60px" }} />
+            <col style={{ width: "15%" }} />
+            <col style={{ width: "auto" }} />
+            <col style={{ width: "10%" }} />
+            <col style={{ width: "10%" }} />
+            <col style={{ width: "140px" }} />
+          </colgroup>
+
           <thead>
-            <tr
-              style={{
-                backgroundColor: "#212529",
-                color: "white",
-                textAlign: "left",
-              }}
-            >
-              {["", "Name", "Email", "Role", "Status", "Actions"].map(
-                (head, i) => (
-                  <th
-                    key={i}
-                    style={{
-                      padding: "12px",
-                      position: "sticky",
-                      top: 0,
-                      background: "#212529",
-                      zIndex: 2,
-                    }}
-                  >
-                    {head}
-                  </th>
-                )
-              )}
+            <tr style={{ backgroundColor: "#212529" }}>
+              <th style={thStyle}>Image</th>
+              <th style={thStyle}>Name</th>
+              <th style={thStyle}>Email</th>
+              <th style={thStyle}>Role</th>
+              <th style={thStyle}>Status</th>
+              <th style={thStyle}>Actions</th>
             </tr>
           </thead>
+
           <tbody>
             {users.map((u, i) => (
               <tr
@@ -110,45 +114,48 @@ const SandboxPage: React.FC = () => {
                   color: "#333",
                 }}
               >
-                <td style={{ padding: "8px 12px" }}>
+                <td style={{ padding: "8px 10px", textAlign: "center" }}>
                   <img
                     src={u.image.url}
-                    alt={`Profile picture for ${u.name.first} ${u.name.last}`}
+                    alt="avatar"
                     style={{
                       width: "35px",
                       height: "35px",
                       borderRadius: "50%",
                       objectFit: "cover",
                       border: "1px solid #ddd",
+                      display: "block",
+                      margin: "0 auto",
                     }}
                   />
                 </td>
+
                 <td
                   style={{
-                    padding: "8px",
-                    maxWidth: "120px",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
+                    padding: "8px 10px",
                     fontWeight: "500",
                     color: "#555",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {u.name.first} {u.name.last}
                 </td>
+
                 <td
                   style={{
-                    padding: "8px",
-                    maxWidth: "150px",
+                    padding: "8px 10px",
+                    color: "#555",
                     whiteSpace: "nowrap",
+                    maxWidth: "200px",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    color: "#555",
                   }}
+                  title={u.email}
                 >
                   {u.email}
                 </td>
-                <td style={{ padding: "8px 12px" }}>
+
+                <td style={{ padding: "8px 10px", whiteSpace: "nowrap" }}>
                   {u.isAdmin ? (
                     <span style={{ fontWeight: "bold", color: "#6f42c1" }}>
                       Admin
@@ -157,7 +164,8 @@ const SandboxPage: React.FC = () => {
                     "User"
                   )}
                 </td>
-                <td style={{ padding: "8px 12px" }}>
+
+                <td style={{ padding: "8px 10px", whiteSpace: "nowrap" }}>
                   <span
                     style={{
                       backgroundColor: u.isBusiness ? "#d4edda" : "#e2e3e5",
@@ -166,12 +174,16 @@ const SandboxPage: React.FC = () => {
                       borderRadius: "20px",
                       fontSize: "0.8rem",
                       fontWeight: "600",
+                      display: "inline-block",
+                      minWidth: "80px",
+                      textAlign: "center",
                     }}
                   >
                     {u.isBusiness ? "Business" : "Regular"}
                   </span>
                 </td>
-                <td style={{ padding: "8px 12px" }}>
+
+                <td style={{ padding: "8px 10px", whiteSpace: "nowrap" }}>
                   {!u.isAdmin && (
                     <div style={{ display: "flex", gap: "8px" }}>
                       <button
@@ -183,6 +195,7 @@ const SandboxPage: React.FC = () => {
                           color: "#856404",
                           border: "1px solid #ffeeba",
                           borderRadius: "4px",
+                          fontSize: "0.85rem",
                         }}
                       >
                         Change
@@ -196,6 +209,7 @@ const SandboxPage: React.FC = () => {
                           color: "#721c24",
                           border: "1px solid #f5c6cb",
                           borderRadius: "4px",
+                          fontSize: "0.85rem",
                         }}
                       >
                         Delete
