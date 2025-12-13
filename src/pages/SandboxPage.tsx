@@ -130,6 +130,7 @@ const SandboxPage: React.FC = () => {
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     fontWeight: "500",
+                    color: "#555",
                   }}
                 >
                   {u.name.first} {u.name.last}
