@@ -107,6 +107,7 @@ const SandboxPage: React.FC = () => {
                 style={{
                   backgroundColor: i % 2 === 0 ? "#fff" : "#f8f9fa",
                   borderBottom: "1px solid #eee",
+                  color: "#333",
                 }}
               >
                 <td style={{ padding: "8px 12px" }}>
