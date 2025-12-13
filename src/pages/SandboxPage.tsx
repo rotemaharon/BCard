@@ -77,17 +77,28 @@ const SandboxPage: React.FC = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "1rem",
+          marginBottom: "1.5rem",
         }}
       >
-        <p className="text-muted m-0">Total Users: {users.length}</p>
+        <p className="text-muted m-0" style={{ fontWeight: "500" }}>
+          Total Users: {users.length}
+        </p>
         <input
           type="text"
-          placeholder="Search by name..."
-          className="form-control"
-          style={{ maxWidth: "300px" }}
+          placeholder="Search user..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          style={{
+            maxWidth: "300px",
+            width: "100%",
+            padding: "10px 20px",
+            borderRadius: "30px",
+            border: "1px solid #ddd",
+            outline: "none",
+            boxShadow: "0 2px 5px rgba(0,0,0,0.05)",
+            fontSize: "0.95rem",
+            transition: "all 0.3s ease",
+          }}
         />
       </div>
 
@@ -96,9 +107,9 @@ const SandboxPage: React.FC = () => {
           width: "100%",
           overflowX: "auto",
           backgroundColor: "white",
-          borderRadius: "8px",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-          border: "1px solid #ddd",
+          borderRadius: "12px",
+          boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+          border: "1px solid #eee",
         }}
       >
         <table
@@ -114,7 +125,7 @@ const SandboxPage: React.FC = () => {
             <col style={{ width: "auto" }} />
             <col style={{ width: "10%" }} />
             <col style={{ width: "10%" }} />
-            <col style={{ width: "140px" }} />
+            <col style={{ width: "160px" }} />
           </colgroup>
           <thead>
             <tr style={{ backgroundColor: "#212529" }}>
@@ -139,7 +150,7 @@ const SandboxPage: React.FC = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="text-center p-3">
+                <td colSpan={6} className="text-center p-4 text-muted">
                   No users found matching "{searchTerm}"
                 </td>
               </tr>
