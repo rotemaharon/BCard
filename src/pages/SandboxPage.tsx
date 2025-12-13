@@ -8,10 +8,14 @@ import type { UserType } from "../interfaces/UserType";
 import { useAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import SandboxRow from "../components/SandboxRow";
+
 const SandboxPage: React.FC = () => {
   const { user } = useAuth();
   const [users, setUsers] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     if (user?.isAdmin) {
       getUsers()
@@ -20,8 +24,10 @@ const SandboxPage: React.FC = () => {
         .finally(() => setLoading(false));
     }
   }, [user]);
+
   if (!user || !user.isAdmin) return <Navigate to="/" replace />;
   if (loading) return <div className="text-center mt-5">Loading...</div>;
+
   const handleDelete = async (id: string) => {
     if (!window.confirm("Delete user?")) return;
     try {
@@ -32,6 +38,7 @@ const SandboxPage: React.FC = () => {
       toast.error("Delete failed");
     }
   };
+
   const handleStatus = async (id: string) => {
     try {
       await changeUserBusinessStatus(id);
@@ -45,6 +52,12 @@ const SandboxPage: React.FC = () => {
       toast.error("Status change failed");
     }
   };
+
+  const filteredUsers = users.filter((u) => {
+    const fullName = `${u.name.first} ${u.name.last}`.toLowerCase();
+    return fullName.includes(searchTerm.toLowerCase());
+  });
+
   const thStyle: React.CSSProperties = {
     padding: "12px 10px",
     position: "sticky",
@@ -55,10 +68,29 @@ const SandboxPage: React.FC = () => {
     textAlign: "left",
     whiteSpace: "nowrap",
   };
+
   return (
     <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
       <h1 className="mb-2">CRM System</h1>
-      <p className="text-muted mb-4">Total Users: {users.length}</p>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "1rem",
+        }}
+      >
+        <p className="text-muted m-0">Total Users: {users.length}</p>
+        <input
+          type="text"
+          placeholder="Search by name..."
+          className="form-control"
+          style={{ maxWidth: "300px" }}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       <div
         style={{
           width: "100%",
@@ -95,115 +127,23 @@ const SandboxPage: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((u, i) => (
-              <tr
-                key={u._id}
-                style={{
-                  backgroundColor: i % 2 === 0 ? "#fff" : "#f8f9fa",
-                  borderBottom: "1px solid #eee",
-                  color: "#333",
-                }}
-              >
-                <td style={{ padding: "8px 10px", textAlign: "center" }}>
-                  <img
-                    src={u.image.url}
-                    alt="avatar"
-                    style={{
-                      width: "35px",
-                      height: "35px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                      border: "1px solid #ddd",
-                      display: "block",
-                      margin: "0 auto",
-                    }}
-                  />
-                </td>
-                <td
-                  style={{
-                    padding: "8px 10px",
-                    fontWeight: "500",
-                    color: "#555",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {u.name.first} {u.name.last}
-                </td>
-                <td
-                  style={{
-                    padding: "8px 10px",
-                    color: "#555",
-                    whiteSpace: "nowrap",
-                    maxWidth: "200px",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                  title={u.email}
-                >
-                  {u.email}
-                </td>
-                <td style={{ padding: "8px 10px", whiteSpace: "nowrap" }}>
-                  {u.isAdmin ? (
-                    <span style={{ fontWeight: "bold", color: "#6f42c1" }}>
-                      Admin
-                    </span>
-                  ) : (
-                    "User"
-                  )}
-                </td>
-                <td style={{ padding: "8px 10px", whiteSpace: "nowrap" }}>
-                  <span
-                    style={{
-                      backgroundColor: u.isBusiness ? "#d4edda" : "#e2e3e5",
-                      color: u.isBusiness ? "#155724" : "#383d41",
-                      padding: "4px 10px",
-                      borderRadius: "20px",
-                      fontSize: "0.8rem",
-                      fontWeight: "600",
-                      display: "inline-block",
-                      minWidth: "80px",
-                      textAlign: "center",
-                    }}
-                  >
-                    {u.isBusiness ? "Business" : "Regular"}
-                  </span>
-                </td>
-                <td style={{ padding: "8px 10px", whiteSpace: "nowrap" }}>
-                  {!u.isAdmin && (
-                    <div style={{ display: "flex", gap: "8px" }}>
-                      <button
-                        onClick={() => handleStatus(u._id)}
-                        style={{
-                          padding: "4px 8px",
-                          cursor: "pointer",
-                          background: "#fff3cd",
-                          color: "#856404",
-                          border: "1px solid #ffeeba",
-                          borderRadius: "4px",
-                          fontSize: "0.85rem",
-                        }}
-                      >
-                        Change
-                      </button>
-                      <button
-                        onClick={() => handleDelete(u._id)}
-                        style={{
-                          padding: "4px 8px",
-                          cursor: "pointer",
-                          background: "#f8d7da",
-                          color: "#721c24",
-                          border: "1px solid #f5c6cb",
-                          borderRadius: "4px",
-                          fontSize: "0.85rem",
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )}
+            {filteredUsers.length > 0 ? (
+              filteredUsers.map((u, i) => (
+                <SandboxRow
+                  key={u._id}
+                  user={u}
+                  index={i}
+                  handleStatus={handleStatus}
+                  handleDelete={handleDelete}
+                />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} className="text-center p-3">
+                  No users found matching "{searchTerm}"
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

@@ -1,7 +1,13 @@
-import React, { useState } from "react";
-import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  HashRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom"; 
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import { SearchProvider } from "./context/SearchContext";
+import { SearchProvider, useSearch } from "./context/SearchContext"; 
 import Layout from "./components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,6 +47,12 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => {
 
 const AppContent = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const location = useLocation();
+  const { setSearchQuery } = useSearch();
+
+  useEffect(() => {
+    setSearchQuery("");
+  }, [location.pathname, setSearchQuery]);
 
   return (
     <Layout darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)}>
