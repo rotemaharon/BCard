@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useFormik, type FormikProps } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCardById, updateCard } from "../services/cardService";
 import { toast } from "react-toastify";
-
+import { useTheme } from "../context/ThemeContext";
+import FormInput from "../components/FormInput";
 interface FormValues {
   title: string;
   subtitle: string;
@@ -20,7 +21,6 @@ interface FormValues {
   street: string;
   houseNumber: number;
 }
-
 const fields: { name: keyof FormValues; ph: string; type?: string }[] = [
   { name: "title", ph: "Title" },
   { name: "subtitle", ph: "Subtitle" },
@@ -36,39 +36,11 @@ const fields: { name: keyof FormValues; ph: string; type?: string }[] = [
   { name: "houseNumber", ph: "House Number", type: "number" },
   { name: "state", ph: "State" },
 ];
-
-const MyInput = ({
-  name,
-  formik,
-  ph,
-  type = "text",
-}: {
-  name: keyof FormValues;
-  formik: FormikProps<FormValues>;
-  ph: string;
-  type?: string;
-}) => (
-  <input
-    name={name}
-    type={type}
-    placeholder={ph}
-    onChange={formik.handleChange}
-    onBlur={formik.handleBlur}
-    value={formik.values[name]}
-    style={{
-      padding: "10px",
-      borderRadius: "5px",
-      border: "1px solid #ccc",
-      width: "100%",
-    }}
-  />
-);
-
 const EditCardPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { darkMode } = useTheme();
   const [initialValues, setInitialValues] = useState<FormValues | null>(null);
-
   useEffect(() => {
     if (!id) return;
     getCardById(id)
@@ -94,7 +66,6 @@ const EditCardPage: React.FC = () => {
         navigate("/my-cards");
       });
   }, [id, navigate]);
-
   const formik = useFormik<FormValues>({
     initialValues: initialValues || {
       title: "",
@@ -149,21 +120,24 @@ const EditCardPage: React.FC = () => {
       }
     },
   });
-
   if (!initialValues) return <div className="text-center mt-5">Loading...</div>;
-
   return (
     <div
       style={{
         maxWidth: "800px",
         margin: "2rem auto",
         padding: "20px",
-        background: "white",
+        background: darkMode ? "#222" : "white",
         borderRadius: "10px",
         boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+        color: darkMode ? "white" : "black",
+        border: darkMode ? "1px solid #444" : "none",
       }}
     >
-      <h2 className="text-center mb-4" style={{ color: "#2196F3" }}>
+      <h2
+        className="text-center mb-4"
+        style={{ color: darkMode ? "#64b5f6" : "#2196F3" }}
+      >
         Edit Card
       </h2>{" "}
       <form
@@ -175,12 +149,13 @@ const EditCardPage: React.FC = () => {
         }}
       >
         {fields.map((f) => (
-          <MyInput
+          <FormInput
             key={f.name}
             name={f.name}
-            ph={f.ph}
+            placeholder={f.ph}
             type={f.type}
             formik={formik}
+            darkMode={darkMode}
           />
         ))}
         <div
@@ -197,7 +172,8 @@ const EditCardPage: React.FC = () => {
             style={{
               flex: 1,
               padding: "10px",
-              background: "#ccc",
+              background: darkMode ? "#555" : "#ccc",
+              color: darkMode ? "white" : "black",
               border: "none",
               borderRadius: "5px",
             }}
@@ -210,7 +186,8 @@ const EditCardPage: React.FC = () => {
             style={{
               flex: 1,
               padding: "10px",
-              background: "#FFC107",
+              background: "#2196F3",
+              color: "white",
               border: "none",
               borderRadius: "5px",
             }}

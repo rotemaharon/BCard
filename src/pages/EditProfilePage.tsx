@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useFormik, type FormikProps } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getUserById, updateUser } from "../services/apiService";
 import { useAuth } from "../context/AuthContext";
-
+import { useTheme } from "../context/ThemeContext";
+import FormInput from "../components/FormInput";
 interface FormValues {
   first: string;
   last: string;
@@ -19,40 +20,28 @@ interface FormValues {
   street: string;
   houseNumber: string;
 }
-
-const MyInput = ({
-  name,
-  placeholder,
-  formik,
-  disabled,
-}: {
+const profileFields: {
   name: keyof FormValues;
-  placeholder: string;
-  formik: FormikProps<FormValues>;
+  ph: string;
   disabled?: boolean;
-}) => (
-  <input
-    name={name}
-    placeholder={placeholder}
-    onChange={formik.handleChange}
-    onBlur={formik.handleBlur}
-    value={formik.values[name]}
-    disabled={disabled}
-    style={{
-      padding: "10px",
-      borderRadius: "5px",
-      border: "1px solid #ccc",
-      width: "100%",
-      backgroundColor: disabled ? "#e9ecef" : "white",
-    }}
-  />
-);
-
+}[] = [
+  { name: "first", ph: "First Name" },
+  { name: "last", ph: "Last Name" },
+  { name: "phone", ph: "Phone" },
+  { name: "email", ph: "Email", disabled: true },
+  { name: "url", ph: "Image URL" },
+  { name: "alt", ph: "Image Alt" },
+  { name: "country", ph: "Country" },
+  { name: "city", ph: "City" },
+  { name: "street", ph: "Street" },
+  { name: "houseNumber", ph: "House Number" },
+  { name: "state", ph: "State" },
+];
 const EditProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { darkMode } = useTheme();
   const [initialValues, setInitialValues] = useState<FormValues | null>(null);
-
   useEffect(() => {
     if (!user?._id) return;
     getUserById(user._id)
@@ -73,7 +62,6 @@ const EditProfilePage: React.FC = () => {
       })
       .catch(() => toast.error("Failed to load data"));
   }, [user]);
-
   const formik = useFormik<FormValues>({
     enableReinitialize: true,
     initialValues: initialValues || {
@@ -101,7 +89,6 @@ const EditProfilePage: React.FC = () => {
     }),
     onSubmit: async (values) => {
       if (!user?._id) return;
-
       const body = {
         name: { first: values.first, last: values.last },
         phone: values.phone,
@@ -112,10 +99,9 @@ const EditProfilePage: React.FC = () => {
           city: values.city,
           street: values.street,
           houseNumber: String(values.houseNumber),
-          zip: "0", 
+          zip: "0",
         },
       };
-
       try {
         await updateUser(user._id, body);
         toast.success("Profile updated successfully");
@@ -126,10 +112,8 @@ const EditProfilePage: React.FC = () => {
       }
     },
   });
-
   if (!user) return <div className="text-center mt-5">Please login</div>;
   if (!initialValues) return <div className="text-center mt-5">Loading...</div>;
-
   return (
     <div
       style={{
@@ -138,11 +122,17 @@ const EditProfilePage: React.FC = () => {
         padding: "20px",
         boxShadow: "0 0 10px rgba(0,0,0,0.1)",
         borderRadius: "10px",
-        backgroundColor: "white",
+        backgroundColor: darkMode ? "#222" : "white",
+        color: darkMode ? "white" : "black",
+        border: darkMode ? "1px solid #444" : "none",
       }}
     >
       <h2
-        style={{ textAlign: "center", marginBottom: "20px", color: "#2196F3" }}
+        style={{
+          textAlign: "center",
+          marginBottom: "20px",
+          color: darkMode ? "#90caf9" : "#2196F3",
+        }}
       >
         Edit Profile
       </h2>
@@ -154,21 +144,16 @@ const EditProfilePage: React.FC = () => {
           gap: "15px",
         }}
       >
-        <MyInput name="first" placeholder="First Name" formik={formik} />
-        <MyInput name="last" placeholder="Last Name" formik={formik} />
-        <MyInput name="phone" placeholder="Phone" formik={formik} />
-        <MyInput name="email" placeholder="Email" formik={formik} disabled />
-        <MyInput name="url" placeholder="Image URL" formik={formik} />
-        <MyInput name="alt" placeholder="Image Alt" formik={formik} />
-        <MyInput name="country" placeholder="Country" formik={formik} />
-        <MyInput name="city" placeholder="City" formik={formik} />
-        <MyInput name="street" placeholder="Street" formik={formik} />
-        <MyInput
-          name="houseNumber"
-          placeholder="House Number"
-          formik={formik}
-        />
-        <MyInput name="state" placeholder="State" formik={formik} />
+        {profileFields.map((f) => (
+          <FormInput
+            key={f.name}
+            name={f.name}
+            placeholder={f.ph}
+            formik={formik}
+            darkMode={darkMode}
+            disabled={f.disabled}
+          />
+        ))}
 
         <div
           style={{
@@ -184,7 +169,8 @@ const EditProfilePage: React.FC = () => {
             style={{
               flex: 1,
               padding: "10px",
-              background: "#ccc",
+              background: darkMode ? "#555" : "#ccc",
+              color: darkMode ? "white" : "black",
               border: "none",
               borderRadius: "5px",
               cursor: "pointer",
@@ -198,11 +184,12 @@ const EditProfilePage: React.FC = () => {
             style={{
               flex: 1,
               padding: "10px",
-              background: "#2196F3",
+              background: darkMode ? "#2196F3" : "#2196F3",
               color: "white",
               border: "none",
               borderRadius: "5px",
               cursor: "pointer",
+              opacity: !formik.isValid ? 0.7 : 1,
             }}
           >
             Save
@@ -212,5 +199,4 @@ const EditProfilePage: React.FC = () => {
     </div>
   );
 };
-
 export default EditProfilePage;

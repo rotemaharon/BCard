@@ -1,5 +1,6 @@
 import React from "react";
 import type { UserType } from "../interfaces/UserType";
+import { useTheme } from "../context/ThemeContext";
 
 interface SandboxRowProps {
   user: UserType;
@@ -14,12 +15,21 @@ const SandboxRow: React.FC<SandboxRowProps> = ({
   handleStatus,
   handleDelete,
 }) => {
+  const { darkMode } = useTheme();
+
   return (
     <tr
       style={{
-        backgroundColor: index % 2 === 0 ? "#fff" : "#f9f9f9",
-        borderBottom: "1px solid #f1f1f1",
-        color: "#333",
+        backgroundColor:
+          index % 2 === 0
+            ? darkMode
+              ? "#2c3034" 
+              : "#fff"
+            : darkMode
+            ? "#212529"
+            : "#f9f9f9", 
+        borderBottom: darkMode ? "1px solid #444" : "1px solid #f1f1f1",
+        color: darkMode ? "#e0e0e0" : "#333",
         transition: "background-color 0.2s",
       }}
     >
@@ -32,7 +42,7 @@ const SandboxRow: React.FC<SandboxRowProps> = ({
             height: "38px",
             borderRadius: "50%",
             objectFit: "cover",
-            border: "2px solid #fff",
+            border: darkMode ? "2px solid #555" : "2px solid #fff",
             boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
             display: "block",
             margin: "0 auto",
@@ -43,7 +53,7 @@ const SandboxRow: React.FC<SandboxRowProps> = ({
         style={{
           padding: "12px 10px",
           fontWeight: "600",
-          color: "#444",
+          color: darkMode ? "#fff" : "#444",
           whiteSpace: "nowrap",
         }}
       >
@@ -52,7 +62,7 @@ const SandboxRow: React.FC<SandboxRowProps> = ({
       <td
         style={{
           padding: "12px 10px",
-          color: "#666",
+          color: darkMode ? "#aaa" : "#666",
           whiteSpace: "nowrap",
           maxWidth: "200px",
           overflow: "hidden",
@@ -72,8 +82,20 @@ const SandboxRow: React.FC<SandboxRowProps> = ({
       <td style={{ padding: "12px 10px", whiteSpace: "nowrap" }}>
         <span
           style={{
-            backgroundColor: user.isBusiness ? "#e8f5e9" : "#f1f3f5",
-            color: user.isBusiness ? "#2e7d32" : "#495057",
+            backgroundColor: user.isBusiness
+              ? darkMode
+                ? "#1b5e20"
+                : "#e8f5e9"
+              : darkMode
+              ? "#424242"
+              : "#f1f3f5",
+            color: user.isBusiness
+              ? darkMode
+                ? "#a5d6a7"
+                : "#2e7d32"
+              : darkMode
+              ? "#bdbdbd"
+              : "#495057",
             padding: "5px 12px",
             borderRadius: "50px",
             fontSize: "0.75rem",

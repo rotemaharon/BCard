@@ -6,8 +6,10 @@ import { registerUser } from "../services/apiService";
 import type { RegisterUserDto } from "../interfaces/UserType";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useTheme } from "../context/ThemeContext";
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
+  const { darkMode } = useTheme();
   const validationSchema = Yup.object({
     first: Yup.string().min(2).required("Required"),
     last: Yup.string().min(2).required("Required"),
@@ -80,7 +82,6 @@ const RegisterPage: React.FC = () => {
     const value = formik.values[name];
     const inputValue =
       value === undefined || value === null ? "" : String(value);
-
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <input
@@ -95,8 +96,13 @@ const RegisterPage: React.FC = () => {
             border:
               formik.touched[name] && formik.errors[name]
                 ? "1px solid red"
+                : darkMode
+                ? "1px solid #555"
                 : "1px solid #ccc",
             borderRadius: "5px",
+            backgroundColor: darkMode ? "#333" : "white",
+            color: darkMode ? "white" : "black",
+            outline: "none",
           }}
         />
         {formik.touched[name] && formik.errors[name] && (
@@ -114,12 +120,18 @@ const RegisterPage: React.FC = () => {
         margin: "2rem auto",
         padding: "20px",
         boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-        backgroundColor: "white",
+        backgroundColor: darkMode ? "#222" : "white",
         borderRadius: "10px",
+        color: darkMode ? "white" : "black",
+        border: darkMode ? "1px solid #444" : "none",
       }}
     >
       <h2
-        style={{ textAlign: "center", marginBottom: "20px", color: "#2196F3" }}
+        style={{
+          textAlign: "center",
+          marginBottom: "20px",
+          color: darkMode ? "#64b5f6" : "#2196F3",
+        }}
       >
         Register
       </h2>
@@ -158,6 +170,9 @@ const RegisterPage: React.FC = () => {
             onChange={formik.handleChange}
             checked={formik.values.isBusiness}
             id="isBusiness"
+            style={{
+              accentColor: darkMode ? "#64b5f6" : "#2196F3",
+            }}
           />
           <label htmlFor="isBusiness">Signup as Business</label>
         </div>
@@ -176,8 +191,8 @@ const RegisterPage: React.FC = () => {
               flex: 1,
               padding: "10px",
               background: "transparent",
-              color: "red",
-              border: "1px solid red",
+              color: "#2196F3",
+              border: "1px solid #2196F3",
               borderRadius: "5px",
               cursor: "pointer",
             }}
@@ -190,7 +205,11 @@ const RegisterPage: React.FC = () => {
             style={{
               flex: 1,
               padding: "10px",
-              background: !formik.isValid ? "#ccc" : "#2196F3",
+              background: !formik.isValid
+                ? darkMode
+                  ? "#555"
+                  : "#ccc"
+                : "#2196F3",
               color: "white",
               border: "none",
               borderRadius: "5px",

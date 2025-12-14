@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   HashRouter,
   Routes,
   Route,
   Navigate,
   useLocation,
-} from "react-router-dom"; 
+} from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import { SearchProvider, useSearch } from "./context/SearchContext"; 
+import { SearchProvider, useSearch } from "./context/SearchContext";
+import { ThemeProvider, useTheme } from "./context/ThemeContext"; 
 import Layout from "./components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,23 +31,20 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (!user) return <Navigate to="/login" replace />;
   return <>{children}</>;
 };
-
 const BusinessRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isBusiness, isLoading } = useAuth();
   if (isLoading) return <div className="text-center mt-5">Loading...</div>;
   if (!user || !isBusiness) return <Navigate to="/" replace />;
   return <>{children}</>;
 };
-
 const AdminRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isAdmin, isLoading } = useAuth();
   if (isLoading) return <div className="text-center mt-5">Loading...</div>;
   if (!user || !isAdmin) return <Navigate to="/" replace />;
   return <>{children}</>;
 };
-
 const AppContent = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const { darkMode, toggleDarkMode } = useTheme();
   const location = useLocation();
   const { setSearchQuery } = useSearch();
 
@@ -55,7 +53,7 @@ const AppContent = () => {
   }, [location.pathname, setSearchQuery]);
 
   return (
-    <Layout darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)}>
+    <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -131,7 +129,9 @@ function App() {
     <HashRouter>
       <AuthProvider>
         <SearchProvider>
-          <AppContent />
+          <ThemeProvider>
+            <AppContent />
+          </ThemeProvider>
         </SearchProvider>
       </AuthProvider>
     </HashRouter>

@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../services/apiService";
 import { toast } from "react-toastify";
+import { useTheme } from "../context/ThemeContext";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { darkMode } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -37,11 +39,17 @@ const LoginPage: React.FC = () => {
         padding: "20px",
         boxShadow: "0 0 10px rgba(0,0,0,0.1)",
         borderRadius: "10px",
-        backgroundColor: "white",
+        backgroundColor: darkMode ? "#222" : "white",
+        color: darkMode ? "white" : "black",
+        border: darkMode ? "1px solid #444" : "none",
       }}
     >
       <h2
-        style={{ textAlign: "center", marginBottom: "20px", color: "#2196F3" }}
+        style={{
+          textAlign: "center",
+          marginBottom: "20px",
+          color: darkMode ? "#64b5f6" : "#2196F3",
+        }}
       >
         Login
       </h2>
@@ -57,10 +65,12 @@ const LoginPage: React.FC = () => {
           style={{
             padding: "10px",
             borderRadius: "5px",
-            border: "1px solid #ccc",
+            border: darkMode ? "1px solid #555" : "1px solid #ccc",
+            backgroundColor: darkMode ? "#333" : "white",
+            color: darkMode ? "white" : "black",
+            outline: "none",
           }}
         />
-
         <div
           style={{
             position: "relative",
@@ -77,8 +87,11 @@ const LoginPage: React.FC = () => {
             style={{
               padding: "10px",
               borderRadius: "5px",
-              border: "1px solid #ccc",
+              border: darkMode ? "1px solid #555" : "1px solid #ccc",
               width: "100%",
+              backgroundColor: darkMode ? "#333" : "white",
+              color: darkMode ? "white" : "black",
+              outline: "none",
             }}
           />
           <button
@@ -91,6 +104,7 @@ const LoginPage: React.FC = () => {
               border: "none",
               cursor: "pointer",
               fontSize: "1.2rem",
+              color: darkMode ? "#ccc" : "inherit",
             }}
           >
             {showPassword ? "👁️" : "👁️‍🗨️"}

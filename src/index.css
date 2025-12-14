@@ -2,7 +2,7 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
+  color-scheme: light dark; 
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
   font-synthesis: none;
@@ -19,7 +19,8 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  overflow-x: hidden; 
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {
@@ -27,11 +28,12 @@ body {
   margin: 0;
   padding: 0;
   text-align: left;
+  min-height: 100vh; 
 }
+
 input, select, textarea {
   max-width: 100%;
 }
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

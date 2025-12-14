@@ -9,12 +9,21 @@ import { useAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SandboxRow from "../components/SandboxRow";
+import { useTheme } from "../context/ThemeContext"; 
 
 const SandboxPage: React.FC = () => {
   const { user } = useAuth();
+  const { darkMode } = useTheme(); 
   const [users, setUsers] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (user?.isAdmin) {
@@ -62,7 +71,7 @@ const SandboxPage: React.FC = () => {
     padding: "12px 10px",
     position: "sticky",
     top: 0,
-    background: "#212529",
+    background: darkMode ? "#333" : "#212529",
     color: "white",
     zIndex: 2,
     textAlign: "left",
@@ -70,7 +79,14 @@ const SandboxPage: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div
+      style={{
+        padding: "20px",
+        maxWidth: "1200px",
+        margin: "0 auto",
+        color: darkMode ? "#fff" : "#000", 
+      }}
+    >
       <h1 className="mb-2">CRM System</h1>
       <div
         style={{
@@ -80,7 +96,13 @@ const SandboxPage: React.FC = () => {
           marginBottom: "1.5rem",
         }}
       >
-        <p className="text-muted m-0" style={{ fontWeight: "500" }}>
+        <p
+          className="m-0"
+          style={{
+            fontWeight: "500",
+            color: darkMode ? "#ccc" : "#6c757d",
+          }}
+        >
           Total Users: {users.length}
         </p>
         <input
@@ -89,11 +111,13 @@ const SandboxPage: React.FC = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            maxWidth: "300px",
+            maxWidth: isMobile ? "160px" : "300px",
             width: "100%",
             padding: "10px 20px",
             borderRadius: "30px",
-            border: "1px solid #ddd",
+            border: darkMode ? "1px solid #555" : "1px solid #ddd",
+            backgroundColor: darkMode ? "#333" : "#fff", 
+            color: darkMode ? "#fff" : "#000", 
             outline: "none",
             boxShadow: "0 2px 5px rgba(0,0,0,0.05)",
             fontSize: "0.95rem",
@@ -101,15 +125,14 @@ const SandboxPage: React.FC = () => {
           }}
         />
       </div>
-
       <div
         style={{
           width: "100%",
           overflowX: "auto",
-          backgroundColor: "white",
+          backgroundColor: darkMode ? "#222" : "white", 
           borderRadius: "12px",
           boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
-          border: "1px solid #eee",
+          border: darkMode ? "1px solid #444" : "1px solid #eee",
         }}
       >
         <table
@@ -128,7 +151,7 @@ const SandboxPage: React.FC = () => {
             <col style={{ width: "160px" }} />
           </colgroup>
           <thead>
-            <tr style={{ backgroundColor: "#212529" }}>
+            <tr>
               <th style={thStyle}>Image</th>
               <th style={thStyle}>Name</th>
               <th style={thStyle}>Email</th>
@@ -150,7 +173,11 @@ const SandboxPage: React.FC = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="text-center p-4 text-muted">
+                <td
+                  colSpan={6}
+                  className="text-center p-4"
+                  style={{ color: darkMode ? "#ccc" : "#6c757d" }}
+                >
                   No users found matching "{searchTerm}"
                 </td>
               </tr>

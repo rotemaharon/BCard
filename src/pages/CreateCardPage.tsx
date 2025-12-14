@@ -4,8 +4,29 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { createCard } from "../services/cardService";
 import { toast } from "react-toastify";
+import { useTheme } from "../context/ThemeContext";
+import CreateInput from "../components/CreateInput";
+
 const CreateCardPage: React.FC = () => {
   const navigate = useNavigate();
+  const { darkMode } = useTheme();
+
+  const inputsConfig = [
+    { name: "title", placeholder: "Title *" },
+    { name: "subtitle", placeholder: "Subtitle *" },
+    { name: "description", placeholder: "Description *" },
+    { name: "phone", placeholder: "Phone *" },
+    { name: "email", placeholder: "Email *" },
+    { name: "web", placeholder: "Web" },
+    { name: "url", placeholder: "Image URL *" },
+    { name: "alt", placeholder: "Image Alt" },
+    { name: "country", placeholder: "Country *" },
+    { name: "city", placeholder: "City *" },
+    { name: "street", placeholder: "Street *" },
+    { name: "houseNumber", placeholder: "House Number *", type: "number" },
+    { name: "state", placeholder: "State" },
+  ];
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -61,18 +82,28 @@ const CreateCardPage: React.FC = () => {
       }
     },
   });
+
   return (
     <div
       style={{
         maxWidth: "800px",
         margin: "2rem auto",
         padding: "20px",
-        backgroundColor: "white",
+        backgroundColor: darkMode ? "#222" : "white",
         boxShadow: "0 0 10px rgba(0,0,0,0.1)",
         borderRadius: "10px",
+        color: darkMode ? "white" : "black",
+        border: darkMode ? "1px solid #444" : "none",
       }}
     >
-      <h2 style={{ textAlign: "center", color: "#2196F3" }}>Create New Card</h2>
+      <h2
+        style={{
+          textAlign: "center",
+          color: darkMode ? "#64b5f6" : "#2196F3",
+        }}
+      >
+        Create New Card
+      </h2>
       <form
         onSubmit={formik.handleSubmit}
         style={{
@@ -81,98 +112,16 @@ const CreateCardPage: React.FC = () => {
           gap: "15px",
         }}
       >
-        <input
-          name="title"
-          placeholder="Title *"
-          onChange={formik.handleChange}
-          value={formik.values.title}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="subtitle"
-          placeholder="Subtitle *"
-          onChange={formik.handleChange}
-          value={formik.values.subtitle}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="description"
-          placeholder="Description *"
-          onChange={formik.handleChange}
-          value={formik.values.description}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="phone"
-          placeholder="Phone *"
-          onChange={formik.handleChange}
-          value={formik.values.phone}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="email"
-          placeholder="Email *"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="web"
-          placeholder="Web"
-          onChange={formik.handleChange}
-          value={formik.values.web}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="url"
-          placeholder="Image URL *"
-          onChange={formik.handleChange}
-          value={formik.values.url}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="alt"
-          placeholder="Image Alt"
-          onChange={formik.handleChange}
-          value={formik.values.alt}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="country"
-          placeholder="Country *"
-          onChange={formik.handleChange}
-          value={formik.values.country}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="city"
-          placeholder="City *"
-          onChange={formik.handleChange}
-          value={formik.values.city}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="street"
-          placeholder="Street *"
-          onChange={formik.handleChange}
-          value={formik.values.street}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="houseNumber"
-          type="number"
-          placeholder="House Number *"
-          onChange={formik.handleChange}
-          value={formik.values.houseNumber}
-          style={{ padding: "10px" }}
-        />
-        <input
-          name="state"
-          placeholder="State"
-          onChange={formik.handleChange}
-          value={formik.values.state}
-          style={{ padding: "10px" }}
-        />
+        {inputsConfig.map((input) => (
+          <CreateInput
+            key={input.name}
+            name={input.name}
+            placeholder={input.placeholder}
+            type={input.type || "text"}
+            formik={formik}
+          />
+        ))}
+
         <div
           style={{
             gridColumn: "1/-1",
@@ -187,7 +136,8 @@ const CreateCardPage: React.FC = () => {
             style={{
               flex: 1,
               padding: "10px",
-              background: "#ccc",
+              background: darkMode ? "#555" : "#ccc",
+              color: darkMode ? "white" : "black",
               border: "none",
               borderRadius: "5px",
             }}
