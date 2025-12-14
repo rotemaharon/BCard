@@ -148,8 +148,8 @@ const RegisterPage: React.FC = () => {
         {renderInput("phone", "Phone *")}
         {renderInput("email", "Email *", "email")}
         {renderInput("password", "Password *", "password")}
-        {renderInput("url", "Image URL *")}
-        {renderInput("alt", "Image Alt *")}
+        {renderInput("url", "Link to image *")}
+        {renderInput("alt", "Image description *")}
         {renderInput("country", "Country *")}
         {renderInput("state", "State")}
         {renderInput("city", "City *")}

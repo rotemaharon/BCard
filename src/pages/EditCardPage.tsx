@@ -29,7 +29,7 @@ const fields: { name: keyof FormValues; ph: string; type?: string }[] = [
   { name: "email", ph: "Email" },
   { name: "web", ph: "Web" },
   { name: "url", ph: "Image URL" },
-  { name: "alt", ph: "Image Alt" },
+  { name: "alt", ph: "Image description" },
   { name: "country", ph: "Country" },
   { name: "city", ph: "City" },
   { name: "street", ph: "Street" },
