@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { CreateCardDto } from "../interfaces/CardType";
 
-const API_URL = `${import.meta.env.VITE_API_URL}/cards`;
+const API_URL = "https://bcard-ojqa.onrender.com/cards";
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
