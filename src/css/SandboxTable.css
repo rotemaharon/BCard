@@ -74,12 +74,9 @@
 
 .status-badge.business.dark { background-color: #1b5e20; color: #a5d6a7; }
 .status-badge.business.light { background-color: #e8f5e9; color: #2e7d32; }
-
 .status-badge.regular.dark { background-color: #424242; color: #bdbdbd; }
 .status-badge.regular.light { background-color: #f1f3f5; color: #495057; }
-
 .action-btn-group { display: flex; gap: 10px; }
-
 .sandbox-btn {
   padding: 6px 14px;
   cursor: pointer;
