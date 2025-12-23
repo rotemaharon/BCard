@@ -6,6 +6,9 @@ import { getCardById, updateCard } from "../services/cardService";
 import { toast } from "react-toastify";
 import { useTheme } from "../context/ThemeContext";
 import FormInput from "../components/FormInput";
+import "../css/FormLayout.css";
+import "../css/FormButtons.css";
+
 interface FormValues {
   title: string;
   subtitle: string;
@@ -122,24 +125,8 @@ const EditCardPage: React.FC = () => {
   });
   if (!initialValues) return <div className="text-center mt-5">Loading...</div>;
   return (
-    <div
-      style={{
-        maxWidth: "800px",
-        margin: "2rem auto",
-        padding: "20px",
-        background: darkMode ? "#222" : "white",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-        color: darkMode ? "white" : "black",
-        border: darkMode ? "1px solid #444" : "none",
-      }}
-    >
-      <h2
-        className="text-center mb-4"
-        style={{ color: darkMode ? "#64b5f6" : "#2196F3" }}
-      >
-        Edit Card
-      </h2>{" "}
+    <div className={`auth-container ${darkMode ? "dark" : ""}`}>
+      <h2 className={`form-title ${darkMode ? "dark" : ""}`}>Edit Card</h2>{" "}
       <form
         onSubmit={formik.handleSubmit}
         style={{
@@ -158,39 +145,18 @@ const EditCardPage: React.FC = () => {
             darkMode={darkMode}
           />
         ))}
-        <div
-          style={{
-            gridColumn: "1/-1",
-            display: "flex",
-            gap: "10px",
-            marginTop: "10px",
-          }}
-        >
+        <div className="form-buttons-container">
           <button
             type="button"
             onClick={() => navigate("/my-cards")}
-            style={{
-              flex: 1,
-              padding: "10px",
-              background: darkMode ? "#555" : "#ccc",
-              color: darkMode ? "white" : "black",
-              border: "none",
-              borderRadius: "5px",
-            }}
+            className={`btn btn-cancel ${darkMode ? "dark" : ""}`}
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={!formik.isValid}
-            style={{
-              flex: 1,
-              padding: "10px",
-              background: "#2196F3",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-            }}
+            className="btn btn-submit"
           >
             Update
           </button>

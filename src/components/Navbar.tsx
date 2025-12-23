@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import NavRightSide from "./NavRightSide";
+import "../css/Navbar.css";
 
 interface NavbarProps {
   darkMode: boolean;
@@ -10,7 +11,6 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
   const navigate = useNavigate();
-
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -22,33 +22,14 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
   const isStackedLayout = isMobile;
 
   return (
-    <nav
-      style={{
-        backgroundColor: darkMode ? "#333" : "#2196F3",
-        color: "white",
-        padding: "10px 20px",
-        display: "flex",
-        flexDirection: "column",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <h2
-            style={{ margin: 0, cursor: "pointer", fontSize: "1.5rem" }}
-            onClick={() => navigate("/")}
-          >
+    <nav className={`navbar ${darkMode ? "dark" : "light"}`}>
+      <div className="navbar-top">
+        <div className="navbar-brand-area">
+          <h2 className="navbar-brand" onClick={() => navigate("/")}>
             BCard
           </h2>
           {!isStackedLayout && (
-            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <div className="navbar-links-desktop">
               <NavLinks />
             </div>
           )}
@@ -60,19 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
         />
       </div>
       {isStackedLayout && (
-        <div
-          style={{
-            marginTop: "10px",
-            display: "flex",
-            gap: "15px",
-            justifyContent: "space-around",
-            alignItems: "center",
-            width: "100%",
-            borderTop: "1px solid rgba(255,255,255,0.2)",
-            paddingTop: "10px",
-            overflowX: "auto",
-          }}
-        >
+        <div className="navbar-links-mobile">
           <NavLinks />
         </div>
       )}

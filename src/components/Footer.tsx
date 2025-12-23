@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { FaInfoCircle, FaHeart, FaIdCard, FaUserCog } from "react-icons/fa";
+import "../css/Footer.css";
 
 interface FooterProps {
   darkMode: boolean;
@@ -10,65 +11,30 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ darkMode }) => {
   const { user } = useAuth();
 
-  const navItemStyle = {
-    display: "flex",
-    flexDirection: "column" as const,
-    alignItems: "center",
-    textDecoration: "none",
-    color: "inherit",
-    fontSize: "0.8rem",
-    gap: "5px",
-    cursor: "pointer",
-    flex: 1,
-    textAlign: "center" as const,
-  };
-
   return (
-    <footer
-      style={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        width: "100%",
-        backgroundColor: darkMode ? "#333" : "#fff",
-        color: darkMode ? "white" : "#555",
-        borderTop: "1px solid #ccc",
-        boxShadow: "0 -2px 10px rgba(0,0,0,0.1)",
-        padding: "10px 0",
-        zIndex: 1000,
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          maxWidth: "600px",
-          margin: "0 auto",
-          padding: "0 20px",
-        }}
-      >
-        <Link to="/about" style={navItemStyle}>
+    <footer className={`footer ${darkMode ? "dark" : "light"}`}>
+      <div className="footer-content">
+        <Link to="/about" className="footer-link">
           <FaInfoCircle size={24} />
           <span>About</span>
         </Link>
 
         {user && (
-          <Link to="/fav-cards" style={navItemStyle}>
+          <Link to="/fav-cards" className="footer-link">
             <FaHeart size={24} />
             <span>Favorites</span>
           </Link>
         )}
 
         {(user?.isBusiness || user?.isAdmin) && (
-          <Link to="/my-cards" style={navItemStyle}>
+          <Link to="/my-cards" className="footer-link">
             <FaIdCard size={24} />
             <span>My Cards</span>
           </Link>
         )}
 
         {user?.isAdmin && (
-          <Link to="/sandbox" style={navItemStyle}>
+          <Link to="/sandbox" className="footer-link">
             <FaUserCog size={24} />
             <span>Sandbox</span>
           </Link>

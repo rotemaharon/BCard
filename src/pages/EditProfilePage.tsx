@@ -7,6 +7,9 @@ import { getUserById, updateUser } from "../services/apiService";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import FormInput from "../components/FormInput";
+import "../css/FormLayout.css";
+import "../css/FormButtons.css";
+
 interface FormValues {
   first: string;
   last: string;
@@ -115,27 +118,8 @@ const EditProfilePage: React.FC = () => {
   if (!user) return <div className="text-center mt-5">Please login</div>;
   if (!initialValues) return <div className="text-center mt-5">Loading...</div>;
   return (
-    <div
-      style={{
-        maxWidth: "800px",
-        margin: "2rem auto",
-        padding: "20px",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-        borderRadius: "10px",
-        backgroundColor: darkMode ? "#222" : "white",
-        color: darkMode ? "white" : "black",
-        border: darkMode ? "1px solid #444" : "none",
-      }}
-    >
-      <h2
-        style={{
-          textAlign: "center",
-          marginBottom: "20px",
-          color: darkMode ? "#90caf9" : "#2196F3",
-        }}
-      >
-        Edit Profile
-      </h2>
+    <div className={`auth-container ${darkMode ? "dark" : ""}`}>
+      <h2 className={`form-title ${darkMode ? "dark" : ""}`}>Edit Profile</h2>
       <form
         onSubmit={formik.handleSubmit}
         style={{
@@ -155,42 +139,19 @@ const EditProfilePage: React.FC = () => {
           />
         ))}
 
-        <div
-          style={{
-            gridColumn: "1 / -1",
-            display: "flex",
-            gap: "10px",
-            marginTop: "10px",
-          }}
-        >
+        <div className="form-buttons-container">
           <button
             type="button"
             onClick={() => navigate("/")}
-            style={{
-              flex: 1,
-              padding: "10px",
-              background: darkMode ? "#555" : "#ccc",
-              color: darkMode ? "white" : "black",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
+            className={`btn btn-cancel ${darkMode ? "dark" : ""}`}
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={!formik.isValid}
-            style={{
-              flex: 1,
-              padding: "10px",
-              background: darkMode ? "#2196F3" : "#2196F3",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-              opacity: !formik.isValid ? 0.7 : 1,
-            }}
+            className={`btn btn-submit ${darkMode ? "dark" : ""}`}
+            style={{ opacity: !formik.isValid ? 0.7 : 1 }}
           >
             Save
           </button>

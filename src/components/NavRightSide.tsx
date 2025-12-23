@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { useSearch } from "../context/SearchContext";
+import "../css/Navbar.css";
 
 interface NavRightSideProps {
   darkMode: boolean;
@@ -35,71 +36,37 @@ const NavRightSide: React.FC<NavRightSideProps> = ({
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-        justifyContent: "flex-end",
-      }}
-    >
+    <div className="nav-right">
       {showSearch && (
         <div
-          style={{
-            backgroundColor: darkMode ? "#555" : "white",
-            padding: "5px 10px",
-            borderRadius: "20px",
-            display: "flex",
-            alignItems: "center",
-            maxWidth: isMobile ? "120px" : "150px",
-          }}
+          className={`search-bar ${darkMode ? "dark" : "light"}`}
+          style={{ maxWidth: isMobile ? "120px" : "150px" }}
         >
           <input
             type="text"
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{
-              border: "none",
-              background: "transparent",
-              color: darkMode ? "white" : "black",
-              outline: "none",
-              width: "100%",
-              minWidth: "50px",
-            }}
+            className={`search-input ${darkMode ? "dark" : "light"}`}
           />
           <FaSearch color={darkMode ? "white" : "gray"} />
         </div>
       )}
-      <button
-        onClick={toggleDarkMode}
-        style={{
-          background: "none",
-          border: "none",
-          color: "white",
-          fontSize: "1.2rem",
-          padding: "5px",
-        }}
-      >
+      <button onClick={toggleDarkMode} className="icon-btn">
         {darkMode ? <FaSun /> : <FaMoon />}
       </button>
       {user ? (
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div
             onClick={() => navigate("/edit-profile")}
-            style={{ cursor: "pointer" }}
+            className="profile-area"
             title="Edit Profile"
           >
             {user.image && user.image.url ? (
               <img
                 src={user.image.url}
                 alt={user.image.alt || "User"}
-                style={{
-                  width: "35px",
-                  height: "35px",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
+                className="profile-img"
               />
             ) : (
               <FaUserCircle style={{ fontSize: "30px" }} />
@@ -107,38 +74,18 @@ const NavRightSide: React.FC<NavRightSideProps> = ({
           </div>
           <button
             onClick={handleLogout}
-            style={{
-              background: "none",
-              border: "none",
-              color: "white",
-              padding: 0,
-            }}
+            className="icon-btn"
+            style={{ padding: 0 }}
           >
             <FaSignOutAlt />
           </button>
         </div>
       ) : (
         <div style={{ display: "flex", gap: "10px" }}>
-          <NavLink
-            to="/login"
-            className="nav-link-small"
-            style={{
-              color: "white",
-              textDecoration: "none",
-              fontWeight: "bold",
-            }}
-          >
+          <NavLink to="/login" className="nav-link-item bold">
             Login
           </NavLink>
-          <NavLink
-            to="/register"
-            className="nav-link-small"
-            style={{
-              color: "white",
-              textDecoration: "none",
-              fontWeight: "bold",
-            }}
-          >
+          <NavLink to="/register" className="nav-link-item bold">
             Signup
           </NavLink>
         </div>

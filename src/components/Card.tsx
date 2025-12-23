@@ -3,6 +3,7 @@ import { type CardType } from "../interfaces/CardType";
 import { FaPhone, FaHeart, FaTrash, FaPen } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import "../css/CardItem.css";
 
 interface CardProps {
   card: CardType;
@@ -22,34 +23,18 @@ const Card: React.FC<CardProps> = ({ card, onDelete, onLike }) => {
   };
 
   return (
-    <div
-      style={{
-        border: "1px solid #ddd",
-        borderRadius: "8px",
-        overflow: "hidden",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className="card-container">
       <img
         src={card.image.url}
         alt={card.image.alt}
         onClick={handleImageClick}
-        style={{
-          width: "100%",
-          height: "200px",
-          objectFit: "cover",
-          cursor: "pointer",
-        }}
+        className="card-img"
       />
 
-      <div style={{ padding: "15px", flex: 1 }}>
-        <h3>{card.title}</h3>
-        <p style={{ color: "#666", fontSize: "0.9rem" }}>{card.subtitle}</p>
-        <hr
-          style={{ margin: "10px 0", border: "0", borderTop: "1px solid #eee" }}
-        />
+      <div className="card-body">
+        <h3 className="card-title">{card.title}</h3>
+        <p className="card-subtitle">{card.subtitle}</p>
+        <hr className="card-divider" />
         <p>
           <strong>Phone:</strong> {card.phone}
         </p>
@@ -61,59 +46,34 @@ const Card: React.FC<CardProps> = ({ card, onDelete, onLike }) => {
           <strong>Card Number:</strong> {card.bizNumber}
         </p>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "20px",
-          }}
-        >
-          <div style={{ display: "flex", gap: "10px" }}>
+        <div className="card-actions">
+          <div className="card-actions-left">
             {user && onLike && (
               <button
                 onClick={() => onLike(card._id)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  color: isLiked ? "red" : "gray",
-                  fontSize: "1.2rem",
-                }}
+                className="action-btn"
+                style={{ color: isLiked ? "red" : "gray" }}
               >
                 <FaHeart />
               </button>
             )}
-            <a
-              href={`tel:${card.phone}`}
-              style={{ color: "black", fontSize: "1.2rem" }}
-            >
+            <a href={`tel:${card.phone}`} className="action-btn phone-link">
               <FaPhone />
             </a>
           </div>
 
           {isOwner && (
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div className="card-actions-right">
               <button
                 onClick={() => navigate(`/edit-card/${card._id}`)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: "1.2rem",
-                }}
+                className="action-btn"
               >
                 <FaPen />
               </button>
               {onDelete && (
                 <button
                   onClick={() => onDelete(card._id)}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    color: "gray",
-                    fontSize: "1.2rem",
-                  }}
+                  className="action-btn delete"
                 >
                   <FaTrash />
                 </button>

@@ -1,0 +1,63 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  background-color: white;
+  color: black;
+  outline: none;
+}
+
+.form-input.dark {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
+.form-input.error {
+  border: 1px solid red;
+}
+
+.form-input:disabled {
+  background-color: #e9ecef;
+}
+
+.form-input.dark:disabled {
+  background-color: #444;
+}
+
+.error-message, .error-message-create {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+.error-message-create {
+   color: #ff6b6b;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: inherit;
+}
+
+.password-toggle-btn.dark {
+  color: #ccc;
+}

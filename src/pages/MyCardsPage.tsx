@@ -7,10 +7,11 @@ import { deleteCard, likeCard } from "../services/cardService";
 import { useAuth } from "../context/AuthContext";
 import { useSearch } from "../context/SearchContext";
 import { toast } from "react-toastify";
+import "../css/CardGrid.css";
 
 const MyCardsPage: React.FC = () => {
   const { user } = useAuth();
-  const { searchQuery } = useSearch(); 
+  const { searchQuery } = useSearch();
   const navigate = useNavigate();
   const { cards, loading, error, setCards, refreshCards } = useMyCards();
 
@@ -44,42 +45,21 @@ const MyCardsPage: React.FC = () => {
 
   if (loading)
     return <div className="text-center mt-5">Loading your cards...</div>;
-  if (error)
-    return <div style={{ color: "red", textAlign: "center" }}>{error}</div>;
+  if (error) return <div className="text-center mt-5 text-danger">{error}</div>;
 
   return (
-    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "20px",
-        }}
-      >
+    <div className="page-container">
+      <div className="page-header-area">
         <div>
-          <h1>My Cards</h1>
-          <p style={{ color: "#666" }}>
+          <h1 className="page-title">My Cards</h1>
+          <p className="page-subtitle">
             Welcome back, {user?.name?.first || "Business User"}
           </p>
         </div>
 
         <button
           onClick={() => navigate("/create-card")}
-          style={{
-            background: "#2196F3",
-            color: "white",
-            border: "none",
-            borderRadius: "50%",
-            width: "50px",
-            height: "50px",
-            fontSize: "24px",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
-          }}
+          className="add-card-btn"
           title="Create New Card"
         >
           <FaPlus />
@@ -87,7 +67,7 @@ const MyCardsPage: React.FC = () => {
       </div>
 
       {!filteredCards || filteredCards.length === 0 ? (
-        <div style={{ textAlign: "center", marginTop: "50px" }}>
+        <div className="no-cards-msg">
           {cards.length === 0 ? (
             <>
               <h3>You haven't created any cards yet.</h3>
@@ -98,13 +78,7 @@ const MyCardsPage: React.FC = () => {
           )}
         </div>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "20px",
-          }}
-        >
+        <div className="cards-grid">
           {filteredCards.map((card) => (
             <Card
               key={card._id}

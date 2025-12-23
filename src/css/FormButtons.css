@@ -1,0 +1,49 @@
+.btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: #2196F3;
+  border: 1px solid #2196F3;
+}
+
+.btn-cancel.dark {
+  background: #555;
+  color: white;
+  border: none;
+}
+
+.btn-submit {
+  background: #2196F3;
+  color: white;
+}
+
+.btn-submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-submit.dark:disabled {
+  background: #555;
+}
+
+.checkbox-group {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-custom {
+  accent-color: #2196F3;
+}
+
+.checkbox-custom.dark {
+  accent-color: #64b5f6;
+}

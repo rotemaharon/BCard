@@ -1,0 +1,118 @@
+.details-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+.details-container.dark {
+  background: #2c3034;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+.details-container.light {
+  background: white;
+  color: #000;
+}
+
+.back-btn {
+  margin-bottom: 20px;
+  padding: 5px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.back-btn.dark {
+  background: #444;
+  color: #fff;
+  border: 1px solid #666;
+}
+
+.back-btn.light {
+  background: none;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+.details-img-container {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.details-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.details-header {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.details-title {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.details-subtitle {
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+.details-subtitle.dark { color: #ccc; }
+.details-subtitle.light { color: #666; }
+
+.details-divider {
+  border: 0;
+  margin: 20px 0;
+}
+
+.details-divider.dark { border-top: 1px solid #555; }
+.details-divider.light { border-top: 1px solid #eee; }
+
+.details-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.details-description.dark { color: #eee; }
+.details-description.light { color: black; }
+
+.info-box {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.info-box.dark {
+  background: #212529;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+.info-box.light {
+  background: #f9f9f9;
+  color: black;
+}
+
+.details-link { text-decoration: none; }
+.details-link.dark { color: #90caf9; }
+.details-link.light { color: #2196F3; }
+
+.map-container {
+  margin-top: 20px;
+  height: 300px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.map-container.dark { border: 1px solid #555; }
+.map-container.light { border: 1px solid #ddd; }

@@ -1,6 +1,7 @@
 import React from "react";
 import type { FormikProps } from "formik";
 import { useTheme } from "../context/ThemeContext";
+import "../css/FormInputs.css";
 
 interface CreateInputProps {
   name: string;
@@ -19,7 +20,7 @@ const CreateInput: React.FC<CreateInputProps> = ({
   const { darkMode } = useTheme();
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+    <div className="input-wrapper">
       <input
         name={name}
         type={type}
@@ -27,20 +28,10 @@ const CreateInput: React.FC<CreateInputProps> = ({
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values[name]}
-        style={{
-          padding: "10px",
-          borderRadius: "5px",
-          border: darkMode ? "1px solid #555" : "1px solid #ccc",
-          width: "100%",
-          backgroundColor: darkMode ? "#333" : "white",
-          color: darkMode ? "white" : "black",
-          outline: "none",
-        }}
+        className={`form-input ${darkMode ? "dark" : ""}`}
       />
       {formik.touched[name] && formik.errors[name] && (
-        <span
-          style={{ color: "#ff6b6b", fontSize: "0.8rem", marginTop: "2px" }}
-        >
+        <span className="error-message-create">
           {String(formik.errors[name])}
         </span>
       )}

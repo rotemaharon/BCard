@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getCardById } from "../services/cardService";
 import type { CardType } from "../interfaces/CardType";
 import { useTheme } from "../context/ThemeContext";
+import "../css/CardDetails.css";
 
 const CardDetailsPage: React.FC = () => {
   const { id } = useParams();
@@ -21,19 +22,13 @@ const CardDetailsPage: React.FC = () => {
 
   if (loading)
     return (
-      <div
-        className="text-center mt-5"
-        style={{ color: darkMode ? "white" : "black" }}
-      >
+      <div className={`text-center mt-5 ${darkMode ? "text-white" : ""}`}>
         Loading details...
       </div>
     );
   if (!card)
     return (
-      <div
-        className="text-center mt-5"
-        style={{ color: darkMode ? "white" : "black" }}
-      >
+      <div className={`text-center mt-5 ${darkMode ? "text-white" : ""}`}>
         Card not found
       </div>
     );
@@ -43,98 +38,32 @@ const CardDetailsPage: React.FC = () => {
     addressString
   )}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
 
+  const themeClass = darkMode ? "dark" : "light";
+
   return (
-    <div
-      style={{
-        maxWidth: "800px",
-        margin: "20px auto",
-        padding: "20px",
-        background: darkMode ? "#2c3034" : "white",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-        borderRadius: "10px",
-        color: darkMode ? "#fff" : "#000",
-        border: darkMode ? "1px solid #444" : "none",
-      }}
-    >
-      <button
-        onClick={() => navigate(-1)}
-        style={{
-          marginBottom: "20px",
-          background: darkMode ? "#444" : "none",
-          color: darkMode ? "#fff" : "#000",
-          border: darkMode ? "1px solid #666" : "1px solid #ccc",
-          padding: "5px 15px",
-          cursor: "pointer",
-          borderRadius: "5px",
-        }}
-      >
+    <div className={`details-container ${themeClass}`}>
+      <button onClick={() => navigate(-1)} className={`back-btn ${themeClass}`}>
         Back
       </button>
 
-      <div
-        style={{
-          width: "100%",
-          height: "300px",
-          overflow: "hidden",
-          borderRadius: "10px",
-        }}
-      >
+      <div className="details-img-container">
         <img
           src={card.image.url}
           alt={card.image.alt}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          className="details-img"
         />
       </div>
 
-      <div style={{ marginTop: "20px", textAlign: "center" }}>
-        <h1
-          style={{
-            fontSize: "2.5rem",
-            color: darkMode ? "#fff" : "#333",
-            marginBottom: "10px",
-          }}
-        >
-          {card.title}
-        </h1>
-        <h3
-          style={{
-            color: darkMode ? "#ccc" : "#666",
-            fontWeight: "normal",
-            marginBottom: "20px",
-          }}
-        >
-          {card.subtitle}
-        </h3>
-        <hr
-          style={{
-            border: "0",
-            borderTop: darkMode ? "1px solid #555" : "1px solid #eee",
-            margin: "20px 0",
-          }}
-        />
+      <div className="details-header">
+        <h1 className="details-title">{card.title}</h1>
+        <h3 className={`details-subtitle ${themeClass}`}>{card.subtitle}</h3>
+        <hr className={`details-divider ${themeClass}`} />
 
-        <p
-          style={{
-            fontSize: "1.1rem",
-            lineHeight: "1.6",
-            margin: "20px 0",
-            textAlign: "left",
-            color: darkMode ? "#eee" : "black",
-          }}
-        >
+        <p className={`details-description ${themeClass}`}>
           {card.description}
         </p>
 
-        <div
-          style={{
-            background: darkMode ? "#212529" : "#f9f9f9",
-            padding: "20px",
-            borderRadius: "8px",
-            textAlign: "left",
-            color: darkMode ? "#fff" : "black",
-            border: darkMode ? "1px solid #444" : "none",
-          }}
-        >
+        <div className={`info-box ${themeClass}`}>
           <h4 style={{ marginBottom: "15px" }}>Contact Details:</h4>
           <p>
             <strong>📞 Phone:</strong> {card.phone}
@@ -149,7 +78,7 @@ const CardDetailsPage: React.FC = () => {
                 href={card.web}
                 target="_blank"
                 rel="noreferrer"
-                style={{ color: darkMode ? "#90caf9" : "#2196F3" }}
+                className={`details-link ${themeClass}`}
               >
                 {card.web}
               </a>
@@ -159,16 +88,7 @@ const CardDetailsPage: React.FC = () => {
             <strong>📍 Address:</strong> {addressString}
           </p>
 
-          <div
-            style={{
-              marginTop: "20px",
-              height: "300px",
-              width: "100%",
-              borderRadius: "8px",
-              overflow: "hidden",
-              border: darkMode ? "1px solid #555" : "1px solid #ddd",
-            }}
-          >
+          <div className={`map-container ${themeClass}`}>
             <iframe
               width="100%"
               height="100%"

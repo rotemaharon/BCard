@@ -1,0 +1,44 @@
+.auth-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: white;
+  color: black;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.auth-container.small {
+  max-width: 400px;
+}
+
+.auth-container.dark {
+  background-color: #222;
+  color: white;
+  border: 1px solid #444;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2196F3;
+}
+
+.form-title.dark {
+  color: #64b5f6;
+}
+
+.form-buttons-container {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-buttons-container.login-layout {
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 0;
+}

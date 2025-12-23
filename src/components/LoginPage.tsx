@@ -6,6 +6,9 @@ import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../services/apiService";
 import { toast } from "react-toastify";
 import { useTheme } from "../context/ThemeContext";
+import "../css/FormLayout.css";
+import "../css/FormInputs.css";
+import "../css/FormButtons.css";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -32,80 +35,32 @@ const LoginPage: React.FC = () => {
   });
 
   return (
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "2rem auto",
-        padding: "20px",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-        borderRadius: "10px",
-        backgroundColor: darkMode ? "#222" : "white",
-        color: darkMode ? "white" : "black",
-        border: darkMode ? "1px solid #444" : "none",
-      }}
-    >
-      <h2
-        style={{
-          textAlign: "center",
-          marginBottom: "20px",
-          color: darkMode ? "#64b5f6" : "#2196F3",
-        }}
-      >
-        Login
-      </h2>
+    <div className={`auth-container small ${darkMode ? "dark" : ""}`}>
+      <h2 className={`form-title ${darkMode ? "dark" : ""}`}>Login</h2>
       <form
         onSubmit={formik.handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+        className="form-buttons-container login-layout"
       >
         <input
           name="email"
           placeholder="Email"
           onChange={formik.handleChange}
           value={formik.values.email}
-          style={{
-            padding: "10px",
-            borderRadius: "5px",
-            border: darkMode ? "1px solid #555" : "1px solid #ccc",
-            backgroundColor: darkMode ? "#333" : "white",
-            color: darkMode ? "white" : "black",
-            outline: "none",
-          }}
+          className={`form-input ${darkMode ? "dark" : ""}`}
         />
-        <div
-          style={{
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+        <div className="password-wrapper">
           <input
             name="password"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             onChange={formik.handleChange}
             value={formik.values.password}
-            style={{
-              padding: "10px",
-              borderRadius: "5px",
-              border: darkMode ? "1px solid #555" : "1px solid #ccc",
-              width: "100%",
-              backgroundColor: darkMode ? "#333" : "white",
-              color: darkMode ? "white" : "black",
-              outline: "none",
-            }}
+            className={`form-input ${darkMode ? "dark" : ""}`}
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            style={{
-              position: "absolute",
-              right: "10px",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "1.2rem",
-              color: darkMode ? "#ccc" : "inherit",
-            }}
+            className={`password-toggle-btn ${darkMode ? "dark" : ""}`}
           >
             {showPassword ? "👁️" : "👁️‍🗨️"}
           </button>
@@ -114,14 +69,7 @@ const LoginPage: React.FC = () => {
         <button
           type="submit"
           disabled={!formik.isValid}
-          style={{
-            padding: "10px",
-            background: "#2196F3",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
+          className="btn btn-submit"
         >
           Login
         </button>

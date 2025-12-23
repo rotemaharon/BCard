@@ -1,22 +1,16 @@
 import React from "react";
+import "../css/ContentPages.css";
 
 const AboutPage: React.FC = () => {
   return (
-    <div
-      style={{
-        maxWidth: "800px",
-        margin: "0 auto",
-        padding: "20px",
-        textAlign: "center",
-      }}
-    >
+    <div className="about-container">
       <h1>About BCard</h1>
-      <p style={{ fontSize: "1.2rem", color: "#555", marginTop: "20px" }}>
+      <p className="about-intro">
         Welcome to <strong>BCard</strong> - The ultimate platform for creating
         and sharing digital business cards.
       </p>
 
-      <div style={{ textAlign: "left", marginTop: "40px", lineHeight: "1.8" }}>
+      <div className="about-content-area">
         <h3>What can you do here?</h3>
         <ul>
           <li>
@@ -32,7 +26,7 @@ const AboutPage: React.FC = () => {
           </li>
         </ul>
 
-        <h3 style={{ marginTop: "30px" }}>How to use the site</h3>
+        <h3 className="about-section-title">How to use the site</h3>
         <p>
           Register for free to start saving your favorite cards.
           <br />
@@ -43,7 +37,7 @@ const AboutPage: React.FC = () => {
           location.
         </p>
       </div>
-      <p style={{ marginTop: "150px" }}>
+      <p className="about-footer">
         Developed by <strong>Rotem Aharon</strong>
       </p>
     </div>

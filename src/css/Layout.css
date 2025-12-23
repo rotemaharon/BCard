@@ -1,0 +1,26 @@
+.app-container {
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container.light {
+  background-color: #f5f5f5;
+  color: black;
+}
+
+.app-container.dark {
+  background-color: #222;
+  color: white;
+}
+
+.main-content {
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 1;
+  box-sizing: border-box;
+  padding-bottom: 80px;
+}

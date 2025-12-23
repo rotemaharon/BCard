@@ -5,16 +5,17 @@ import { useAuth } from "../context/AuthContext";
 import { useSearch } from "../context/SearchContext";
 import { likeCard } from "../services/cardService";
 import { toast } from "react-toastify";
+import "../css/CardGrid.css";
 
 const FavCardsPage: React.FC = () => {
   const { user } = useAuth();
-  const { searchQuery } = useSearch(); 
+  const { searchQuery } = useSearch();
   const { cards, loading, error, refreshCards } = useCards();
 
   if (loading) return <div className="text-center mt-5">Loading...</div>;
   if (error)
     return (
-      <div className="text-danger text-center mt-5">Error loading cards</div>
+      <div className="text-center mt-5 text-danger">Error loading cards</div>
     );
 
   const favCards = cards.filter(
@@ -39,9 +40,9 @@ const FavCardsPage: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
-      <h1>Favorite Cards</h1>
-      <p style={{ color: "#666", marginBottom: "30px" }}>
+    <div className="page-container">
+      <h1 className="page-title">Favorite Cards</h1>
+      <p className="page-subtitle">
         Here you can find all your favorite business cards
       </p>
 
@@ -52,13 +53,7 @@ const FavCardsPage: React.FC = () => {
             : `No favorites match "${searchQuery}"`}
         </p>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "20px",
-          }}
-        >
+        <div className="cards-grid">
           {filteredFavCards.map((card) => (
             <Card key={card._id} card={card} onLike={handleRemoveFromFav} />
           ))}

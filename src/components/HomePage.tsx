@@ -3,13 +3,14 @@ import Card from "./Card";
 import { useCards } from "../hooks/useCards";
 import { useSearch } from "../context/SearchContext";
 import { likeCard } from "../services/cardService";
+import "../css/CardGrid.css";
 
 const HomePage: React.FC = () => {
   const { cards, loading, error, refreshCards } = useCards();
   const { searchQuery } = useSearch();
 
   if (loading) return <div className="text-center mt-5">Loading...</div>;
-  if (error) return <div className="text-danger text-center mt-5">{error}</div>;
+  if (error) return <div className="text-center mt-5 text-danger">{error}</div>;
 
   const handleLike = async (id: string) => {
     try {
@@ -27,20 +28,14 @@ const HomePage: React.FC = () => {
   );
 
   return (
-    <div className="container" style={{ padding: "20px" }}>
-      <h1>Cards Page</h1>
-      <p className="text-secondary mb-4">Here you can find business cards</p>
+    <div className="page-container">
+      <h1 className="page-title">Cards Page</h1>
+      <p className="page-subtitle">Here you can find business cards</p>
 
       {filteredCards.length === 0 ? (
         <p>No cards found.</p>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: "20px",
-          }}
-        >
+        <div className="cards-grid">
           {filteredCards.map((card) => (
             <Card key={card._id} card={card} onLike={handleLike} />
           ))}

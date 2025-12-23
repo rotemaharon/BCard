@@ -1,6 +1,7 @@
 import React from "react";
 import type { UserType } from "../interfaces/UserType";
 import { useTheme } from "../context/ThemeContext";
+import "../css/SandboxTable.css";
 
 interface SandboxRowProps {
   user: UserType;
@@ -16,134 +17,49 @@ const SandboxRow: React.FC<SandboxRowProps> = ({
   handleDelete,
 }) => {
   const { darkMode } = useTheme();
+  const themeClass = darkMode ? "dark" : "light";
+  const rowStripe = index % 2 === 0 ? "even" : "odd";
 
   return (
-    <tr
-      style={{
-        backgroundColor:
-          index % 2 === 0
-            ? darkMode
-              ? "#2c3034" 
-              : "#fff"
-            : darkMode
-            ? "#212529"
-            : "#f9f9f9", 
-        borderBottom: darkMode ? "1px solid #444" : "1px solid #f1f1f1",
-        color: darkMode ? "#e0e0e0" : "#333",
-        transition: "background-color 0.2s",
-      }}
-    >
-      <td style={{ padding: "12px 10px", textAlign: "center" }}>
+    <tr className={`sandbox-row ${rowStripe} ${themeClass}`}>
+      <td className="sandbox-td center">
         <img
           src={user.image.url}
           alt="avatar"
-          style={{
-            width: "38px",
-            height: "38px",
-            borderRadius: "50%",
-            objectFit: "cover",
-            border: darkMode ? "2px solid #555" : "2px solid #fff",
-            boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-            display: "block",
-            margin: "0 auto",
-          }}
+          className={`user-avatar ${themeClass}`}
         />
       </td>
-      <td
-        style={{
-          padding: "12px 10px",
-          fontWeight: "600",
-          color: darkMode ? "#fff" : "#444",
-          whiteSpace: "nowrap",
-        }}
-      >
+      <td className={`sandbox-td text-name ${themeClass}`}>
         {user.name.first} {user.name.last}
       </td>
-      <td
-        style={{
-          padding: "12px 10px",
-          color: darkMode ? "#aaa" : "#666",
-          whiteSpace: "nowrap",
-          maxWidth: "200px",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-        }}
-        title={user.email}
-      >
+      <td className={`sandbox-td text-email ${themeClass}`} title={user.email}>
         {user.email}
       </td>
-      <td style={{ padding: "12px 10px", whiteSpace: "nowrap" }}>
-        {user.isAdmin ? (
-          <span style={{ fontWeight: "bold", color: "#6f42c1" }}>Admin</span>
-        ) : (
-          "User"
-        )}
+      <td className="sandbox-td">
+        {user.isAdmin ? <span className="admin-badge">Admin</span> : "User"}
       </td>
-      <td style={{ padding: "12px 10px", whiteSpace: "nowrap" }}>
+      <td className="sandbox-td">
         <span
-          style={{
-            backgroundColor: user.isBusiness
-              ? darkMode
-                ? "#1b5e20"
-                : "#e8f5e9"
-              : darkMode
-              ? "#424242"
-              : "#f1f3f5",
-            color: user.isBusiness
-              ? darkMode
-                ? "#a5d6a7"
-                : "#2e7d32"
-              : darkMode
-              ? "#bdbdbd"
-              : "#495057",
-            padding: "5px 12px",
-            borderRadius: "50px",
-            fontSize: "0.75rem",
-            fontWeight: "700",
-            display: "inline-block",
-            minWidth: "80px",
-            textAlign: "center",
-            boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
-          }}
+          className={`status-badge ${
+            user.isBusiness ? "business" : "regular"
+          } ${themeClass}`}
         >
           {user.isBusiness ? "Business" : "Regular"}
         </span>
       </td>
-      <td style={{ padding: "12px 10px", whiteSpace: "nowrap" }}>
+      <td className="sandbox-td">
         {!user.isAdmin && (
-          <div style={{ display: "flex", gap: "10px" }}>
+          <div className="action-btn-group">
             <button
               onClick={() => handleStatus(user._id)}
-              style={{
-                padding: "6px 14px",
-                cursor: "pointer",
-                background: "linear-gradient(135deg, #ffecb3 0%, #ffe082 100%)",
-                color: "#8d6e63",
-                border: "none",
-                borderRadius: "50px",
-                fontSize: "0.8rem",
-                fontWeight: "600",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                transition: "transform 0.1s",
-              }}
+              className="sandbox-btn btn-change"
               title="Change Status"
             >
               Change
             </button>
             <button
               onClick={() => handleDelete(user._id)}
-              style={{
-                padding: "6px 14px",
-                cursor: "pointer",
-                background: "linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%)",
-                color: "#b71c1c",
-                border: "none",
-                borderRadius: "50px",
-                fontSize: "0.8rem",
-                fontWeight: "600",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                transition: "transform 0.1s",
-              }}
+              className="sandbox-btn btn-delete"
               title="Delete User"
             >
               Delete

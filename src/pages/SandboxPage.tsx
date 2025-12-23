@@ -9,11 +9,13 @@ import { useAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SandboxRow from "../components/SandboxRow";
-import { useTheme } from "../context/ThemeContext"; 
+import { useTheme } from "../context/ThemeContext";
+import "../css/SandboxLayout.css";
+import "../css/SandboxTable.css";
 
 const SandboxPage: React.FC = () => {
   const { user } = useAuth();
-  const { darkMode } = useTheme(); 
+  const { darkMode } = useTheme();
   const [users, setUsers] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,42 +69,13 @@ const SandboxPage: React.FC = () => {
     return fullName.includes(searchTerm.toLowerCase());
   });
 
-  const thStyle: React.CSSProperties = {
-    padding: "12px 10px",
-    position: "sticky",
-    top: 0,
-    background: darkMode ? "#333" : "#212529",
-    color: "white",
-    zIndex: 2,
-    textAlign: "left",
-    whiteSpace: "nowrap",
-  };
+  const themeClass = darkMode ? "dark" : "light";
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        maxWidth: "1200px",
-        margin: "0 auto",
-        color: darkMode ? "#fff" : "#000", 
-      }}
-    >
-      <h1 className="mb-2">CRM System</h1>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1.5rem",
-        }}
-      >
-        <p
-          className="m-0"
-          style={{
-            fontWeight: "500",
-            color: darkMode ? "#ccc" : "#6c757d",
-          }}
-        >
+    <div className={`sandbox-container ${themeClass}`}>
+      <h1 className="sandbox-header">CRM System</h1>
+      <div className="sandbox-controls">
+        <p className={`user-count ${themeClass}`}>
           Total Users: {users.length}
         </p>
         <input
@@ -110,38 +83,12 @@ const SandboxPage: React.FC = () => {
           placeholder="Search user..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            maxWidth: isMobile ? "160px" : "300px",
-            width: "100%",
-            padding: "10px 20px",
-            borderRadius: "30px",
-            border: darkMode ? "1px solid #555" : "1px solid #ddd",
-            backgroundColor: darkMode ? "#333" : "#fff", 
-            color: darkMode ? "#fff" : "#000", 
-            outline: "none",
-            boxShadow: "0 2px 5px rgba(0,0,0,0.05)",
-            fontSize: "0.95rem",
-            transition: "all 0.3s ease",
-          }}
+          className={`sandbox-search ${themeClass}`}
+          style={{ maxWidth: isMobile ? "160px" : "300px" }}
         />
       </div>
-      <div
-        style={{
-          width: "100%",
-          overflowX: "auto",
-          backgroundColor: darkMode ? "#222" : "white", 
-          borderRadius: "12px",
-          boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
-          border: darkMode ? "1px solid #444" : "1px solid #eee",
-        }}
-      >
-        <table
-          style={{
-            width: "100%",
-            minWidth: "800px",
-            borderCollapse: "collapse",
-          }}
-        >
+      <div className={`table-wrapper ${themeClass}`}>
+        <table className="sandbox-table">
           <colgroup>
             <col style={{ width: "60px" }} />
             <col style={{ width: "15%" }} />
@@ -152,12 +99,12 @@ const SandboxPage: React.FC = () => {
           </colgroup>
           <thead>
             <tr>
-              <th style={thStyle}>Image</th>
-              <th style={thStyle}>Name</th>
-              <th style={thStyle}>Email</th>
-              <th style={thStyle}>Role</th>
-              <th style={thStyle}>Status</th>
-              <th style={thStyle}>Actions</th>
+              <th className={`sandbox-th ${themeClass}`}>Image</th>
+              <th className={`sandbox-th ${themeClass}`}>Name</th>
+              <th className={`sandbox-th ${themeClass}`}>Email</th>
+              <th className={`sandbox-th ${themeClass}`}>Role</th>
+              <th className={`sandbox-th ${themeClass}`}>Status</th>
+              <th className={`sandbox-th ${themeClass}`}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -175,7 +122,7 @@ const SandboxPage: React.FC = () => {
               <tr>
                 <td
                   colSpan={6}
-                  className="text-center p-4"
+                  className={`text-center p-4 ${themeClass}`}
                   style={{ color: darkMode ? "#ccc" : "#6c757d" }}
                 >
                   No users found matching "{searchTerm}"

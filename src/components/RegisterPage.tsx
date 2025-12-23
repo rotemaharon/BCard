@@ -7,9 +7,14 @@ import type { RegisterUserDto } from "../interfaces/UserType";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useTheme } from "../context/ThemeContext";
+import "../css/FormLayout.css";
+import "../css/FormInputs.css";
+import "../css/FormButtons.css";
+
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const { darkMode } = useTheme();
+
   const validationSchema = Yup.object({
     first: Yup.string().min(2).required("Required"),
     last: Yup.string().min(2).required("Required"),
@@ -30,6 +35,7 @@ const RegisterPage: React.FC = () => {
     houseNumber: Yup.string().required("Required"),
     isBusiness: Yup.boolean().required(),
   });
+
   const formik = useFormik({
     initialValues: {
       first: "",
@@ -74,6 +80,7 @@ const RegisterPage: React.FC = () => {
       }
     },
   });
+
   const renderInput = (
     name: keyof typeof formik.values,
     placeholder: string,
@@ -82,8 +89,11 @@ const RegisterPage: React.FC = () => {
     const value = formik.values[name];
     const inputValue =
       value === undefined || value === null ? "" : String(value);
+
+    const isError = formik.touched[name] && formik.errors[name];
+
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div className="input-wrapper">
         <input
           name={name}
           type={type}
@@ -91,50 +101,20 @@ const RegisterPage: React.FC = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={inputValue}
-          style={{
-            padding: "10px",
-            border:
-              formik.touched[name] && formik.errors[name]
-                ? "1px solid red"
-                : darkMode
-                ? "1px solid #555"
-                : "1px solid #ccc",
-            borderRadius: "5px",
-            backgroundColor: darkMode ? "#333" : "white",
-            color: darkMode ? "white" : "black",
-            outline: "none",
-          }}
+          className={`form-input ${darkMode ? "dark" : ""} ${
+            isError ? "error" : ""
+          }`}
         />
-        {formik.touched[name] && formik.errors[name] && (
-          <span style={{ color: "red", fontSize: "0.8rem", marginTop: "2px" }}>
-            {formik.errors[name]}
-          </span>
+        {isError && (
+          <span className="error-message">{formik.errors[name]}</span>
         )}
       </div>
     );
   };
+
   return (
-    <div
-      style={{
-        maxWidth: "800px",
-        margin: "2rem auto",
-        padding: "20px",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-        backgroundColor: darkMode ? "#222" : "white",
-        borderRadius: "10px",
-        color: darkMode ? "white" : "black",
-        border: darkMode ? "1px solid #444" : "none",
-      }}
-    >
-      <h2
-        style={{
-          textAlign: "center",
-          marginBottom: "20px",
-          color: darkMode ? "#64b5f6" : "#2196F3",
-        }}
-      >
-        Register
-      </h2>
+    <div className={`auth-container ${darkMode ? "dark" : ""}`}>
+      <h2 className={`form-title ${darkMode ? "dark" : ""}`}>Register</h2>
       <form
         onSubmit={formik.handleSubmit}
         style={{
@@ -156,65 +136,30 @@ const RegisterPage: React.FC = () => {
         {renderInput("street", "Street *")}
         {renderInput("houseNumber", "House Number *")}
 
-        <div
-          style={{
-            gridColumn: "1 / -1",
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
+        <div className="checkbox-group">
           <input
             type="checkbox"
             name="isBusiness"
             onChange={formik.handleChange}
             checked={formik.values.isBusiness}
             id="isBusiness"
-            style={{
-              accentColor: darkMode ? "#64b5f6" : "#2196F3",
-            }}
+            className={`checkbox-custom ${darkMode ? "dark" : ""}`}
           />
           <label htmlFor="isBusiness">Signup as Business</label>
         </div>
-        <div
-          style={{
-            gridColumn: "1 / -1",
-            display: "flex",
-            gap: "10px",
-            marginTop: "20px",
-          }}
-        >
+
+        <div className="form-buttons-container">
           <button
             type="button"
             onClick={() => navigate("/")}
-            style={{
-              flex: 1,
-              padding: "10px",
-              background: "transparent",
-              color: "#2196F3",
-              border: "1px solid #2196F3",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
+            className="btn btn-cancel"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={!formik.isValid || !formik.dirty}
-            style={{
-              flex: 1,
-              padding: "10px",
-              background: !formik.isValid
-                ? darkMode
-                  ? "#555"
-                  : "#ccc"
-                : "#2196F3",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
+            className={`btn btn-submit ${darkMode ? "dark" : ""}`}
           >
             Submit
           </button>
