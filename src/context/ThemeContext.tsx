@@ -19,12 +19,16 @@ export const useTheme = () => {
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [darkMode, setDarkMode] = useState(false);
+ const [darkMode, setDarkMode] = useState(
+   () => localStorage.getItem("darkMode") === "true",
+ );
 
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev);
-  };
-
+ const toggleDarkMode = () => {
+   setDarkMode((prev) => {
+     localStorage.setItem("darkMode", String(!prev));
+     return !prev;
+   });
+ };
   return (
     <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
       {children}

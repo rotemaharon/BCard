@@ -10,7 +10,7 @@ import "../css/CardGrid.css";
 const FavCardsPage: React.FC = () => {
   const { user } = useAuth();
   const { searchQuery } = useSearch();
-  const { cards, loading, error, refreshCards } = useCards();
+  const { cards, loading, error, setCards } = useCards();
 
   if (loading) return <div className="text-center mt-5">Loading...</div>;
   if (error)
@@ -19,19 +19,29 @@ const FavCardsPage: React.FC = () => {
     );
 
   const favCards = cards.filter(
-    (card) => user && card.likes.includes(user._id)
+    (card) => user && card.likes.includes(user._id),
   );
 
   const filteredFavCards = favCards.filter(
     (card) =>
       card.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      card.subtitle.toLowerCase().includes(searchQuery.toLowerCase())
+      card.subtitle.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const handleRemoveFromFav = async (id: string) => {
+    if (!user) return;
     try {
       await likeCard(id);
-      await refreshCards();
+      setCards((prev) =>
+        prev.map((card) =>
+          card._id === id
+            ? {
+                ...card,
+                likes: card.likes.filter((l) => l !== user._id),
+              }
+            : card,
+        ),
+      );
       toast.success("Card removed from favorites");
     } catch (err) {
       console.error(err);

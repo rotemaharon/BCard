@@ -1,27 +1,56 @@
-# BCard - פלטפורמת כרטיסי ביקור דיגיטליים
+# BCard - Digital Business Cards Platform
 
-פרויקט גמר (Full Stack) שנבנה באמצעות React ו-TypeScript.
+A full-stack final project built with React and TypeScript.
 
-## משתמשי בדיקה
+## Getting Started
 
- **Admin** | admin@gmail.com | Abc!123Abc |
- **Business** | pizza@gmail.com | Abc!123Abc |
- **Regular** | guest@gmail.com | Guest!4321 |
+1. Clone the repository:
+```bash
+   git clone https://github.com/rotemaharon/BCard.git
+   cd BCard
+```
 
+2. Install dependencies:
+```bash
+   npm install
+```
 
-## דגשים מרכזיים
+3. Create a `.env` file in the root directory based on `.env.example`:
+```
+VITE_API_URL=https://bcard-ojqa.onrender.com
+```
 
-* **מערכת הרשאות מלאה:** ניווט דינאמי וגישת CRUD משתנה בהתאם לתפקיד המשתמש.
-* **Token Management:** הטוקן נשמר ב-`localStorage` ונשלח עם כל בקשת API.
-* **חיפוש:** סינון כרטיסים גלובלי בזמן אמת ב-Navbar.
-* **ולידציה:** Formik + Yup עם Regex מחמיר לסיסמה (כולל 4 ספרות).
-* **נגישות:** כל התמונות כוללות תגי alt תיאוריים.
-* **CRM (בונוס):** פאנל ניהול משתמשים מלא ל-Admin (שינוי סטטוס ומחיקה).
-* **תצוגה:** דף פרטים מורחב עם הטמעת מפת Google דינאמית.
+4. Start the development server:
+```bash
+   npm run dev
+```
 
-## טכנולוגיות
+## Test Users
 
-* Client: React, TypeScript, Context API, Vite.
-* Forms: Formik + Yup.
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@gmail.com | Abc!123Abc |
+| Business | pizza@gmail.com | Abc!123Abc |
+| Regular | guest@gmail.com | Guest!4321 |
 
-נכתב על ידי: **רותם אהרון**
+## Features
+
+- Full role-based authorization with dynamic navigation and CRUD permissions
+- JWT authentication stored in localStorage and sent with every API request
+- Real-time global card search in the Navbar
+- Form validation using Formik and Yup with strict password Regex
+- Accessible images with descriptive alt attributes
+- Dark mode with persistence across page refreshes
+- Card details page with an embedded dynamic Google Map
+- CRM panel for Admin users to manage user status and deletion
+
+## Tech Stack
+
+- React 19, TypeScript, Vite
+- Context API for state management
+- Formik and Yup for form validation
+- Axios for HTTP requests
+- JWT and jwt-decode for authentication
+- React Icons and React Toastify for UI
+
+Developed by Rotem Aharon

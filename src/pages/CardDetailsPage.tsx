@@ -4,6 +4,7 @@ import { getCardById } from "../services/cardService";
 import type { CardType } from "../interfaces/CardType";
 import { useTheme } from "../context/ThemeContext";
 import "../css/CardDetails.css";
+import { toast } from "react-toastify";
 
 const CardDetailsPage: React.FC = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ const CardDetailsPage: React.FC = () => {
     if (!id) return;
     getCardById(id)
       .then((data) => setCard(data))
-      .catch((err) => console.error(err))
+      .catch(() => toast.error("Failed to load card details"))
       .finally(() => setLoading(false));
   }, [id]);
 

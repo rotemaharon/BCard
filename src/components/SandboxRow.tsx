@@ -25,7 +25,7 @@ const SandboxRow: React.FC<SandboxRowProps> = ({
       <td className="sandbox-td center">
         <img
           src={user.image.url}
-          alt="avatar"
+          alt={user.image.alt || `${user.name.first} ${user.name.last}`}
           className={`user-avatar ${themeClass}`}
         />
       </td>

@@ -45,6 +45,7 @@ const LoginPage: React.FC = () => {
           name="email"
           placeholder="Email"
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.email}
           className={`form-input ${darkMode ? "dark" : ""}`}
         />
@@ -54,6 +55,7 @@ const LoginPage: React.FC = () => {
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.password}
             className={`form-input ${darkMode ? "dark" : ""}`}
           />

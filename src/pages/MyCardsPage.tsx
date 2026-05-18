@@ -13,7 +13,7 @@ const MyCardsPage: React.FC = () => {
   const { user } = useAuth();
   const { searchQuery } = useSearch();
   const navigate = useNavigate();
-  const { cards, loading, error, setCards, refreshCards } = useMyCards();
+  const { cards, loading, error, setCards } = useMyCards();
 
   const handleDelete = async (id: string) => {
     if (window.confirm("Are you sure you want to delete this card?")) {
@@ -29,18 +29,31 @@ const MyCardsPage: React.FC = () => {
   };
 
   const handleLike = async (id: string) => {
+    if (!user) return;
     try {
       await likeCard(id);
-      await refreshCards();
+      setCards((prev) =>
+        prev.map((card) =>
+          card._id === id
+            ? {
+                ...card,
+                likes: card.likes.includes(user._id)
+                  ? card.likes.filter((l) => l !== user._id)
+                  : [...card.likes, user._id],
+              }
+            : card,
+        ),
+      );
     } catch (err) {
       console.error("Error toggling like", err);
+      toast.error("Error updating like");
     }
   };
 
   const filteredCards = cards.filter(
     (card) =>
       card.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      card.subtitle.toLowerCase().includes(searchQuery.toLowerCase())
+      card.subtitle.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   if (loading)

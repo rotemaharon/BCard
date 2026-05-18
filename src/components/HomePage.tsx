@@ -2,20 +2,34 @@ import React from "react";
 import Card from "./Card";
 import { useCards } from "../hooks/useCards";
 import { useSearch } from "../context/SearchContext";
+import { useAuth } from "../context/AuthContext";
 import { likeCard } from "../services/cardService";
 import "../css/CardGrid.css";
 
 const HomePage: React.FC = () => {
-  const { cards, loading, error, refreshCards } = useCards();
+  const { cards, loading, error, setCards } = useCards();
   const { searchQuery } = useSearch();
+  const { user } = useAuth();
 
   if (loading) return <div className="text-center mt-5">Loading...</div>;
   if (error) return <div className="text-center mt-5 text-danger">{error}</div>;
 
   const handleLike = async (id: string) => {
+    if (!user) return;
     try {
       await likeCard(id);
-      await refreshCards();
+      setCards((prev) =>
+        prev.map((card) =>
+          card._id === id
+            ? {
+                ...card,
+                likes: card.likes.includes(user._id)
+                  ? card.likes.filter((l) => l !== user._id)
+                  : [...card.likes, user._id],
+              }
+            : card,
+        ),
+      );
     } catch (err) {
       console.error(err);
     }
@@ -24,7 +38,7 @@ const HomePage: React.FC = () => {
   const filteredCards = cards.filter(
     (card) =>
       card.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      card.bizNumber.toString().includes(searchQuery)
+      card.bizNumber.toString().includes(searchQuery),
   );
 
   return (
