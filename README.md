@@ -1,4 +1,5 @@
 # BCard - Digital Business Cards Platform
+Live demo: https://b-card-gamma.vercel.app
 
 A full-stack final project built with React and TypeScript.
 
